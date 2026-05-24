@@ -173,6 +173,10 @@ button { font-family: inherit; background: none; border: none; color: inherit; c
   font-family: var(--serif-en); font-style: italic;
   font-size: 44px; color: var(--accent); font-weight: 400; line-height: 1;
 }
+.slider-value .num.closeness-word {
+  font-family: var(--serif-cn); font-style: normal;
+  font-size: 30px; letter-spacing: 0.10em; font-weight: 500;
+}
 .slider-value .sublabel {
   font-family: var(--serif-cn); font-size: 13px; color: var(--muted);
   margin-top: 10px; letter-spacing: 0.06em; min-height: 18px;
@@ -459,12 +463,15 @@ button { font-family: inherit; background: none; border: none; color: inherit; c
 }
 .result-tags .tag { padding: 5px 10px; font-size: 10px; }
 .result-tags .tag.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
-.result-cta { margin: 6px 28px 28px; }
+.result-cta { margin: auto 28px 28px; padding-top: 12px; }
 .result-cta button {
   width: 100%; background: var(--ink); color: #fff;
   padding: 15px; font-size: 11px;
   letter-spacing: 0.18em; text-transform: uppercase;
+  transition: background-color 0.18s ease;
+  cursor: pointer;
 }
+.result-cta button:hover { background: var(--accent); }
 .result-cta .platform {
   font-family: var(--serif-en); font-style: italic;
   margin-left: 6px; text-transform: none; letter-spacing: 0.02em; color: rgba(255,255,255,0.7);
@@ -595,8 +602,12 @@ const T = {
     social: { zh: '社交', en: 'SOCIAL' },
   },
   closenessLabels: {
-    zh: ['点头之交', '熟人', '朋友', '好友', '挚友', '家人', '灵魂伴侣'],
-    en: ['Nodding', 'Familiar', 'Friend', 'Close', 'Confidant', 'Family', 'Soulmate']
+    zh: ['普通', '略熟', '比较熟', '熟悉', '亲近', '亲密', '极亲密'],
+    en: ['Ordinary', 'Slight', 'Familiar', 'Known', 'Close', 'Intimate', 'Profound']
+  },
+  closenessSub: {
+    zh: ['客气一点', '见过几次', '聊得来', '经常往来', '重要的人', '心里有数', '不必多言'],
+    en: ['Polite distance', 'Met a few times', 'On good terms', 'Regular contact', 'They matter', 'Deep understanding', 'Beyond words']
   },
   occasions: {
     milestones: { zh: '里程碑', en: 'MILESTONES' },
@@ -975,12 +986,16 @@ const TIPS = [
 ];
 
 // ============== STATE ==============
+// Discrete budget steps in SGD; user-requested non-linear ladder
+const BUDGET_STEPS = [50, 100, 200, 300, 500, 800, 1000, 1500, 2000, 3000, 5000, 8000, 10000];
+const BUDGET_MAJOR = new Set([50, 100, 500, 1000, 5000, 10000]);
+
 const STATE = {
   lang: 'zh',
   region: REGION_DEFAULT,
   step: 0, // 0=welcome, 1..8=steps, 9=result
   intent: [], recipient: null, closeness: 3, occasion: null,
-  budgetT: 0.30, // slider t value
+  budgetIdx: 4, // default S$500
   persona: [], givenBefore: [],
   brands: {}, // brand_id → 'own'|'want'|'skip'
   brandBatch: 0,
@@ -1017,11 +1032,6 @@ function localizedPrice(rmb) {
   return '$' + priceUSD(rmb).toLocaleString();
 }
 
-// non-linear budget (S$50 → S$10000)
-function budgetFromT(t) {
-  const min = Math.log(50), max = Math.log(10000);
-  return Math.round(Math.exp(min + t * (max - min)) / 10) * 10;
-}
 function budgetLabel(sgd) {
   if (STATE.lang === 'zh') {
     if (sgd < 100) return '一点小心意';
@@ -1040,7 +1050,7 @@ function budgetLabel(sgd) {
 
 // ============== RECOMMENDATION ENGINE ==============
 function recommend() {
-  const budgetSGD = budgetFromT(STATE.budgetT);
+  const budgetSGD = BUDGET_STEPS[STATE.budgetIdx];
   const budgetRMB = budgetSGD * 5.3;
   const excludedCats = new Set(STATE.givenBefore);
   const skippedBrands = new Set(Object.entries(STATE.brands).filter(([_,v])=>v==='skip').map(([k])=>k));
@@ -1215,7 +1225,7 @@ function topbar(showClose = true) {
 function freshStateKeepLang() {
   return {
     step: 0, intent: [], recipient: null, closeness: 3, occasion: null,
-    budgetT: 0.30, persona: [], givenBefore: [], brands: {}, brandBatch: 0,
+    budgetIdx: 4, persona: [], givenBefore: [], brands: {}, brandBatch: 0,
     resultCard: 0, results: null, tipIndex: 0,
   };
 }
@@ -1365,9 +1375,10 @@ function renderS3(screen) {
   screen.appendChild(stepHead(3, 8, 's3Title', 's3Sub', 's3Hint'));
   const wrap = el('div', 'slider-wrap fade-up');
   const labels = T.closenessLabels[STATE.lang];
+  const subs = T.closenessSub[STATE.lang];
   const value = el('div', 'slider-value');
   const updateValue = () => {
-    value.innerHTML = `<div class="num">${String(STATE.closeness + 1).padStart(2, '0')}</div><div class="sublabel">${labels[STATE.closeness]}</div>`;
+    value.innerHTML = `<div class="num closeness-word">${labels[STATE.closeness]}</div><div class="sublabel">${subs[STATE.closeness]}</div>`;
   };
   updateValue();
   wrap.appendChild(value);
@@ -1456,10 +1467,9 @@ function renderS5(screen) {
   const wrap = el('div', 'slider-wrap fade-up');
   const value = el('div', 'slider-value');
   const updateValue = () => {
-    const sgd = budgetFromT(STATE.budgetT);
-    let s = 'S$' + sgd.toLocaleString();
-    if (sgd >= 9500) s = 'S$10,000+';
-    value.innerHTML = `<div class="num">${s}</div><div class="sublabel">${budgetLabel(sgd)}</div>`;
+    const sgd = BUDGET_STEPS[STATE.budgetIdx];
+    const display = sgd >= 10000 ? 'S$10,000+' : 'S$' + sgd.toLocaleString();
+    value.innerHTML = `<div class="num">${display}</div><div class="sublabel">${budgetLabel(sgd)}</div>`;
   };
   updateValue();
   wrap.appendChild(value);
@@ -1470,23 +1480,31 @@ function renderS5(screen) {
   const thumb = el('div', 'slider-thumb');
   track.appendChild(line); track.appendChild(fill); track.appendChild(thumb);
 
-  const ticks = el('div', 'slider-ticks');
-  for (let i = 0; i < 11; i++) ticks.appendChild(el('div', 'slider-tick' + (i % 2 === 0 ? ' major' : '')));
+  // Ticks: one per step, majors are styled bigger
+  const ticks = el('div', 'slider-ticks budget-ticks');
+  BUDGET_STEPS.forEach(s => {
+    ticks.appendChild(el('div', 'slider-tick' + (BUDGET_MAJOR.has(s) ? ' major' : '')));
+  });
 
   const legend = el('div', 'slider-legend');
-  legend.innerHTML = `<span>S$ 50</span><span>S$ 800</span><span>S$ 10k+</span>`;
+  legend.innerHTML = `<span>S$ 50</span><span>S$ 1,000</span><span>S$ 10k+</span>`;
 
+  const N = BUDGET_STEPS.length - 1; // last index
   function setPos() {
-    thumb.style.left = (STATE.budgetT * 100) + '%';
-    fill.style.width = (STATE.budgetT * 100) + '%';
+    const pct = STATE.budgetIdx / N;
+    thumb.style.left = (pct * 100) + '%';
+    fill.style.width = (pct * 100) + '%';
   }
   setPos();
 
   function handlePos(x) {
     const rect = track.getBoundingClientRect();
     const t = Math.max(0, Math.min(1, (x - rect.left) / rect.width));
-    STATE.budgetT = t;
-    setPos(); updateValue();
+    const idx = Math.round(t * N);
+    if (idx !== STATE.budgetIdx) {
+      STATE.budgetIdx = idx;
+      setPos(); updateValue();
+    }
   }
   let dragging = false;
   const onDown = (e) => { dragging = true; thumb.classList.add('grab'); const x = e.touches? e.touches[0].clientX : e.clientX; handlePos(x); e.preventDefault(); };
@@ -1684,39 +1702,63 @@ function renderResult(app) {
     dots.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === STATE.resultCard));
   }
 
-  // swipe
-  let startX = 0, dx = 0, swiping = false;
-  const onStart = (e) => {
-    swiping = true;
+  // Swipe with direction lock + reflow fix
+  let startX = 0, startY = 0, dx = 0, swiping = false, axis = null, pointerKind = null;
+  const cardsList = () => deck.querySelectorAll('.result-card');
+  const DIRECTION_LOCK = 8;
+  const SWIPE_THRESHOLD = 50;
+
+  const onStart = (e, kind) => {
+    // Ignore duplicate event from synthetic mouse after touch
+    if (swiping) return;
+    swiping = true; axis = null; dx = 0; pointerKind = kind;
     startX = (e.touches ? e.touches[0].clientX : e.clientX);
-    dx = 0;
-    deck.querySelectorAll('.result-card').forEach(c => c.style.transition = 'none');
+    startY = (e.touches ? e.touches[0].clientY : e.clientY);
   };
   const onMove = (e) => {
     if (!swiping) return;
     const x = (e.touches ? e.touches[0].clientX : e.clientX);
+    const y = (e.touches ? e.touches[0].clientY : e.clientY);
     dx = x - startX;
-    deck.querySelectorAll('.result-card').forEach((c, i) => {
+    const dy = y - startY;
+    if (axis === null) {
+      if (Math.abs(dx) < DIRECTION_LOCK && Math.abs(dy) < DIRECTION_LOCK) return;
+      axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+      if (axis === 'x') {
+        cardsList().forEach(c => c.style.transition = 'none');
+      } else {
+        // Vertical: yield to native scroll inside the card
+        swiping = false; return;
+      }
+    }
+    cardsList().forEach((c, i) => {
       c.style.transform = `translateX(calc(${(i - STATE.resultCard) * 100}% + ${dx}px))`;
     });
   };
-  const onEnd = () => {
+  const onEnd = (e, kind) => {
     if (!swiping) return;
+    // Only the matching pointer type ends the swipe (prevents touch+mouse double fire)
+    if (pointerKind && kind && pointerKind !== kind) return;
     swiping = false;
-    deck.querySelectorAll('.result-card').forEach(c => c.style.transition = '');
-    if (Math.abs(dx) > 50) {
-      if (dx < 0 && STATE.resultCard < 3) STATE.resultCard++;
-      else if (dx > 0 && STATE.resultCard > 0) STATE.resultCard--;
+    if (axis === 'x') {
+      if (Math.abs(dx) > SWIPE_THRESHOLD) {
+        if (dx < 0 && STATE.resultCard < cardsList().length - 1) STATE.resultCard++;
+        else if (dx > 0 && STATE.resultCard > 0) STATE.resultCard--;
+      }
+      // Force layout flush so browser commits drag-end transform as transition start
+      void deck.offsetHeight;
+      cardsList().forEach(c => c.style.transition = '');
+      updateDeck();
     }
-    updateDeck();
-    dx = 0;
+    axis = null; dx = 0; pointerKind = null;
   };
-  deck.addEventListener('mousedown', onStart);
-  deck.addEventListener('touchstart', onStart, { passive: true });
+  deck.addEventListener('mousedown', (e) => onStart(e, 'mouse'));
+  deck.addEventListener('touchstart', (e) => onStart(e, 'touch'), { passive: true });
   onWindow('mousemove', onMove);
   onWindow('touchmove', onMove, { passive: true });
-  onWindow('mouseup', onEnd);
-  onWindow('touchend', onEnd);
+  onWindow('mouseup', (e) => onEnd(e, 'mouse'));
+  onWindow('touchend', (e) => onEnd(e, 'touch'));
+  onWindow('touchcancel', (e) => onEnd(e, 'touch'));
 
   screen.appendChild(deck);
   screen.appendChild(dots);
@@ -1756,6 +1798,15 @@ function buildResultCard(r, i) {
       <button>${t('goBuy')}<span class="platform">· ${PLATFORM[STATE.region]}</span></button>
     </div>
   `;
+  card.querySelector('.result-cta button').onclick = () => {
+    const qParts = [brandName, STATE.lang === 'zh' ? r.name_zh : (r.name_en || r.name_zh)];
+    const q = encodeURIComponent(qParts.filter(Boolean).join(' '));
+    let url;
+    if (STATE.region === 'cn') url = 'https://list.tmall.com/search_product.htm?q=' + q;
+    else if (STATE.region === 'na') url = 'https://www.amazon.com/s?k=' + q;
+    else url = 'https://www.lazada.sg/catalog/?q=' + q;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
   return card;
 }
 
