@@ -1,0 +1,14 @@
+{
+  "name": "A Gift · 礼",
+  "short_name": "礼",
+  "description": "礼物决策辅助 — Gift Decision App",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#6B5544",
+  "background_color": "#FCFCFB",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "./index.html"
+}

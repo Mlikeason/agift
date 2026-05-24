@@ -1,0 +1,81 @@
+brand_id,name_en,name_zh,origin,tier,main_categories,price_band,notes
+B001,Hermès,爱马仕,法国,luxury,包;丝巾;香水;餐具;笔记本,高,顶奢标杆，最安全的"高级感"选项
+B002,Chanel,香奈儿,法国,luxury,包;香水;口红;首饰;护肤,高,女性礼物全能选手
+B003,Louis Vuitton,路易威登,法国,luxury,包;钱包;香水;丝巾,高,辨识度极强，适合"显贵气"场合
+B004,Dior,迪奥,法国,luxury,包;香水;口红;护肤;首饰,高,口红和香水入门门槛低
+B005,Gucci,古驰,意大利,luxury,包;首饰;香水;围巾,高,风格鲜明 适合个性强的人
+B006,Prada,普拉达,意大利,luxury,包;鞋;首饰;香水,高,近年回潮 知识女性偏爱
+B007,Miu Miu,缪缪,意大利,luxury,包;首饰;鞋,高,Y2K复古风 年轻女性首选
+B008,Cartier,卡地亚,法国,luxury,首饰;手表,高,Love/Trinity/Juste un Clou 经典款认知度高
+B009,Tiffany & Co.,蒂芙尼,美国,luxury,首饰;银器,高,银饰入门门槛最低的奢牌
+B010,Van Cleef & Arpels,梵克雅宝,法国,luxury,首饰,极高,Alhambra四叶草系列辨识度顶级
+B011,Bvlgari,宝格丽,意大利,luxury,首饰;香水;手表,高,B.zero1/Serpenti 风格大胆
+B012,Saint Laurent,圣罗兰,法国,luxury,包;首饰;美妆,高,YSL口红是入门礼经典
+B013,Bottega Veneta,葆蝶家,意大利,luxury,包;钱包;首饰,高,极简无logo 适合品位人士
+B014,Celine,思琳,法国,luxury,包;太阳镜;围巾,高,Old Celine粉丝忠诚度高
+B015,Loewe,罗意威,西班牙,luxury,包;围巾;香水,高,Puzzle/Hammock皮具工艺顶级
+B016,Burberry,博柏利,英国,luxury,围巾;包;风衣,高,经典格纹围巾节日礼热门
+B017,Fendi,芬迪,意大利,luxury,包;首饰;围巾,高,Peekaboo/Baguette 经典款
+B018,Tom Ford,汤姆福特,美国,luxury,香水;口红;眼镜,高,黑管系列男女通吃
+B019,Goyard,戈雅,法国,luxury,包;钱包;旅行箱,高,低调老钱风 圈内人识别
+B020,Loro Piana,,意大利,luxury,围巾;羊绒;鞋,极高,顶级羊绒 内行人才懂
+B021,Aesop,伊索,澳大利亚,niche,护肤;护手霜;香水;沐浴,中,公认"最安全的小众礼"
+B022,Le Labo,,美国,niche,香水;香薰;蜡烛,中高,Santal 33 是文艺青年通行证
+B023,Diptyque,蒂普提克,法国,niche,香水;蜡烛;香氛,中高,Baies/Figuier 香薰蜡烛标杆
+B024,Byredo,百瑞德,瑞典,niche,香水;蜡烛;包,高,Mojave Ghost/Bal d'Afrique 调性独特
+B025,Maison Margiela Replica,,法国,niche,香水;蜡烛,中,场景化香水 命名诗意
+B026,Maison Francis Kurkdjian,MFK,法国,niche,香水,高,Baccarat Rouge 540 现象级网红香
+B027,Comme des Garçons,川久保玲,日本,niche,服装;香水;配饰,高,Play心心系列入门门槛低
+B028,Acne Studios,,瑞典,niche,围巾;包;服装,中高,粉红条纹羊毛围巾经典
+B029,Jil Sander,吉尔桑达,德国,niche,包;服装;香水,高,极简主义代表
+B030,Lemaire,,法国,niche,包;服装,高,Croissant包安静火爆
+B031,The Row,,美国,niche,包;服装;鞋,极高,Olsen姐妹的Quiet Luxury神坛
+B032,Issey Miyake,三宅一生,日本,niche,包;香水;服装,中高,Bao Bao几何包好搭
+B033,Marni,玛尼,意大利,niche,包;首饰;服装,中高,色彩大胆 设计感强
+B034,Jacquemus,,法国,niche,包;首饰;服装,中高,Le Chiquito迷你包社交媒体宠儿
+B035,Polène,,法国,niche,包;钱包,中,简洁线条 性价比高的轻奢
+B036,Songmont,山下有松,中国,niche,包;钱包;首饰,中,国产中高端皮具代表
+B037,观夏 To Summer,,中国,niche,香水;蜡烛;护手霜,中,昆仑煮雪/颐和金桂 东方香
+B038,闻献 DOCUMENTS,,中国,niche,香水;蜡烛,中,医院香风格 国产小众
+B039,茶里 CHALI,,中国,niche,茶;礼盒,低,设计感茶包 平价伴手礼
+B040,Hobonichi,,日本,niche,笔记本,中,糸井重里手帐文化代表
+B041,Smythson,,英国,niche,笔记本;皮具,高,英国王室御用文具
+B042,Cire Trudon,,法国,niche,蜡烛;香氛,高,1643年创立 法国蜡烛鼻祖
+B043,Lost in Echo,,中国,niche,鞋;包;首饰,中,国产设计师品牌 极简未来感
+B044,Stanley,,美国,trendy,水杯;户外,低中,Quencher水杯爆款现象级
+B045,Owala,,美国,trendy,水杯,低,FreeSip好用度高 ins流行
+B046,Jellycat,,英国,trendy,玩偶;礼物,低中,Bashful Bunny 治愈系送礼标配
+B047,Pop Mart,泡泡玛特,中国,trendy,玩偶;盲盒,低中,Labubu/Skullpanda二级市场热门
+B048,Lululemon,露露柠檬,加拿大,trendy,运动服;包;配件,中,Everywhere腰包/瑜伽裤
+B049,On Running,昂跑,瑞士,trendy,鞋;运动服,中,Cloud系列都市跑鞋
+B050,Salomon,萨洛蒙,法国,trendy,鞋;户外,中高,XT-6/Speedcross时尚户外
+B051,Arc'teryx,始祖鸟,加拿大,trendy,户外服;包,高,Beta/Atom 中产新身份
+B052,Maison Kitsuné,,日本/法国,trendy,服装;包;配饰,中,小狐狸logo辨识度高
+B053,Carhartt WIP,,美国,trendy,服装;包,中,WIP线区别于工装本牌
+B054,Stüssy,斯图西,美国,trendy,服装;配饰,中,街头潮流元老
+B055,Charles & Keith,小CK,新加坡,trendy,包;鞋;首饰,低,平价时尚 学生党友好
+B056,Coach,蔻驰,美国,trendy,包;钱包;首饰,中,Tabby回潮 重新年轻化
+B057,Mejuri,,加拿大,trendy,首饰,中,DTC轻奢首饰 极简风
+B058,Gentle Monster,,韩国,trendy,眼镜,中高,大胆设计 K-pop带火
+B059,APM Monaco,,摩纳哥,trendy,首饰,中,银饰镶钻 入门轻奢
+B060,老铺黄金,,中国,trendy,金饰,高,古法金现象级 排队代表
+B061,Muji,无印良品,日本,lifestyle,文具;家居;护肤;衣物,低,百搭安全的入门礼
+B062,Marimekko,,芬兰,lifestyle,家纺;餐具;包,中,Unikko罂粟花经典印花
+B063,Iittala,,芬兰,lifestyle,玻璃器;餐具;摆件,中,Kastehelmi/Birds by Toikka
+B064,Le Creuset,酷彩,法国,lifestyle,铸铁锅;餐具,中高,新婚/乔迁礼经典
+B065,Bodum,,丹麦,lifestyle,咖啡器具;玻璃杯,低中,法压壶/双层玻璃杯
+B066,HAY,,丹麦,lifestyle,家居;文具,中,北欧设计 颜色出彩
+B067,Apple,苹果,美国,tech,数码;耳机;手表,中高,AirPods/Apple Watch 安全实用
+B068,Sony,索尼,日本,tech,耳机;音箱;相机,中高,WF/WH-1000XM系列降噪标杆
+B069,Bose,,美国,tech,耳机;音箱,中高,QuietComfort 降噪老牌
+B070,Bang & Olufsen,B&O,丹麦,tech,音箱;耳机,高,设计感+音质 高端商务礼
+B071,Anker,,中国,tech,充电;配件,低,实用平价 安全送男生
+B072,Montblanc,万宝龙,德国,pen,钢笔;皮具;手表,高,Meisterstück 149商务送礼标配
+B073,LAMY,凌美,德国,pen,钢笔;圆珠笔,低中,Safari/2000 学生到入门商务
+B074,Pilot,百乐,日本,pen,钢笔;圆珠笔,低中,Custom 74 性价比之王
+B075,Parker,派克,英国,pen,钢笔,中,Sonnet 经典商务
+B076,Kaweco,,德国,pen,钢笔,低中,Sport口袋钢笔小巧
+B077,Sailor,写乐,日本,pen,钢笔,中高,Pro Gear/King of Pen 日系
+B078,SK-II,,日本,beauty,护肤,中高,神仙水万能送礼
+B079,La Mer,海蓝之谜,美国,beauty,护肤,高,面霜重磅礼
+B080,Helena Rubinstein,赫莲娜,法国,beauty,护肤;美妆,高,黑绷带/绿宝瓶 顶级抗老

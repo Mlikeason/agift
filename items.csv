@@ -1,0 +1,137 @@
+item_id,category_id,brand_id,product_name,price_tier,price_rmb,recipient,why_popular_or_note
+I001,C01,B061,Muji 香水(柚子/茉莉)30ml,T1,150,通用,日系清新 学生/同事安全
+I002,C01,,Zara EDP系列 100ml,T1,180,女,平价香水 包装精致
+I003,C01,B025,MMM Replica Jazz Club 10ml试管,T1,200,男,场景化香水 入门体验
+I004,C01,B023,Diptyque 杜桑/影中之水 7.5ml,T2,380,女,法式小众 mini适合首送
+I005,C01,B037,观夏 昆仑煮雪 EDP 50ml,T2,598,女/中性,东方香 国货高级感
+I006,C01,B025,MMM Replica 慵懒周末/壁炉边 30ml,T2,790,通用,叙事性香水 文艺青年爱
+I007,C01,B011,Bvlgari 大吉岭茶 25ml,T2,450,男/中性,清新茶香 男女通吃
+I008,C01,B004,Dior 迪奥真我/旷野 50ml,T3,1200,女/男,经典认知度顶级
+I009,C01,B002,Chanel 可可小姐 50ml,T3,1450,女,经典优雅 30+女性偏爱
+I010,C01,B022,Le Labo Santal 33 EDP 50ml,T3,1980,中性,文艺青年通行证
+I011,C01,B024,Byredo Mojave Ghost 50ml,T3,1900,女,小众沙漠玫瑰调
+I012,C01,B026,MFK Baccarat Rouge 540 EDP 70ml,T4,2800,女,网红香水的天花板
+I013,C01,B018,Tom Ford 黑兰花 100ml,T4,2400,女,Sexy/独立女性
+I014,C01,B001,Hermès 大地 100ml,T3,1500,男,商务安全 父辈友好
+I015,C01,B026,MFK Baccarat Rouge 540 Extrait 70ml,T4,5800,女,Baccarat顶配 顶级礼物
+I016,C02,B061,Muji 香薰蜡烛,T1,120,通用,新人入门 平价
+I017,C02,,Voluspa mini蜡烛 13g,T1,180,女,网红ins风 平价小礼
+I018,C02,B021,Aesop Aganice 蜡烛 300g,T2,800,通用,Aesop蜡烛少见 高级感强
+I019,C02,B023,Diptyque Baies 70g,T2,440,通用,黑加仑+玫瑰 最经典款
+I020,C02,B023,Diptyque Figuier 190g,T2,720,通用,无花果香 中性
+I021,C02,B025,MMM Replica 壁炉边蜡烛 165g,T2,620,通用,木质温暖 冬季首选
+I022,C02,B037,观夏 颐和金桂蜡烛,T2,498,通用,国货文艺
+I023,C02,B022,Le Labo Santal 26 245g,T3,1850,通用,香水同款 单价高级
+I024,C02,B042,Cire Trudon Ernesto 270g,T3,1500,通用,法国蜡烛鼻祖 古典
+I025,C02,B023,Diptyque 三芯蜡烛 600g,T3,1800,通用,客厅大件 视觉感强
+I026,C02,B042,Cire Trudon Cyrnos 大号 3kg,T4,5500,通用,豪宅级装饰
+I027,C03,B009,MAC子弹头 Ruby Woo,T1,190,女,正红色经典款
+I028,C03,,完美日记小细跟,T1,99,女,平价女生宿舍礼
+I029,C03,B012,YSL小金条/小银条 N°1/N°2,T2,360,女,送女朋友入门款
+I030,C03,B004,Dior 烈艳蓝金 999,T2,390,女,新年红 万年送女友
+I031,C03,B018,Tom Ford 子弹头 Casablanca,T2,500,女,高级感 知性女
+I032,C03,B002,Chanel 可可小姐唇笔 红管,T2,450,女,大牌入门
+I033,C03,B001,Hermès 唇膏 64号Rouge Casaque,T2,690,女,橙包装 仪式感顶级
+I034,C03,B001,Hermès 唇膏12色精选套装,T4,8500,女,顶级仪式感礼盒
+I035,C04,,The Ordinary 烟酰胺/A醇套装,T1,200,女/男,平价成分党
+I036,C04,,凡士林经典润肤膏,T1,30,通用,实用补充礼
+I037,C04,B021,Aesop 天竺葵护手霜 75ml,T2,260,女/男,公认最安全小众礼
+I038,C04,B078,SK-II 神仙水 75ml,T2,850,女,入门款 适合朋友
+I039,C04,B079,La Mer 浓缩修护精华 30ml,T3,1900,女,La Mer入门
+I040,C04,B078,SK-II 神仙水 230ml,T3,1850,女,送妈妈/姐姐经典
+I041,C04,B080,HR 黑绷带面霜 30ml,T4,3200,女,抗老顶配
+I042,C04,B079,La Mer 经典精华面霜 100ml,T4,5500,女,La Mer天花板
+I043,C05,B061,Muji 帆布手提袋,T1,99,通用,极简日常 学生
+I044,C05,B055,Charles & Keith 半月包,T2,500,女,平价时尚 学生党
+I045,C05,B036,Songmont 松鼠包小号,T2,799,女,国产中端 设计感
+I046,C05,,Longchamp Le Pliage S,T2,850,女,经典折叠包
+I047,C05,B056,Coach Tabby 26,T3,2500,女,回潮经典款 性价比高
+I048,C05,B032,Issey Miyake Bao Bao Lucent 6×6,T3,2800,通用,几何包 设计师爱
+I049,C05,B035,Polène Numéro Sept,T3,3000,女,小众轻奢
+I050,C05,B003,LV Neverfull MM,T4,15500,女,经典通勤 万能款
+I051,C05,B015,Loewe Puzzle Mini,T4,18000,女,西班牙工艺顶级
+I052,C05,B013,BV Cassette编织包,T4,22000,女,极简无logo 老钱风
+I053,C05,B001,Hermès Garden Party 30,T4,22000,女,Hermès入门通勤
+I054,C06,B061,Muji 护照夹/卡包,T1,80,通用,实用入门
+I055,C06,B055,Charles & Keith 卡包,T1,150,女,
+I056,C06,B056,Coach 卡包/钱包入门款,T2,600,通用,品牌入门礼
+I057,C06,B036,Songmont 真皮卡包,T2,500,通用,国产质感
+I058,C06,B012,Saint Laurent 卡包,T3,2500,通用,带logo的入门YSL
+I059,C06,B015,Loewe 卡包/卡夹,T3,2800,通用,
+I060,C06,B019,Goyard Saint-Sulpice卡包,T4,5500,通用,低调老钱风入门
+I061,C06,B001,Hermès Bearn钱包,T4,12000,女,顶级钱包认知
+I062,C07,B061,Muji/HAY 极简银耳钉,T1,150,女,日常入门
+I063,C07,B059,APM Monaco 小型耳钉,T2,500,女,轻奢入门款
+I064,C07,,Mejuri 14k小金耳钉,T2,800,女,DTC轻奢 极简
+I065,C07,B009,Tiffany T Smile 银款,T3,2500,女,蓝盒子情怀
+I066,C07,B011,Bvlgari B.zero1银款耳钉,T3,3000,女,
+I067,C07,B010,Van Cleef Sweet Alhambra 耳钉,T4,12000,女,四叶草入门
+I068,C07,B008,Cartier Trinity 三色金耳钉,T4,15000,女,
+I069,C08,B009,Tiffany Return to Tiffany 心形项链 银,T3,2800,女,告白经典款
+I070,C08,B010,Van Cleef Vintage Alhambra 项链,T4,28000,女,四叶草顶配
+I071,C08,B008,Cartier Love项链,T4,18000,女,情侣表白款
+I072,C10,B008,Cartier Love手镯 18K,T4,42000,女,周年纪念顶配
+I073,C10,B011,Bvlgari B.zero1戒指 18K,T4,15000,通用,
+I074,C11,,Casio 小方块A158/A168,T1,180,通用,复古实用 校园风
+I075,C11,,Casio G-Shock入门款,T2,650,男,户外运动
+I076,C11,,Daniel Wellington 入门款,T2,900,女/男,送毕业生友好
+I077,C11,B067,Apple Watch SE,T3,2199,通用,实用入门
+I078,C11,,Seiko 5系列机械,T3,1800,男,机械表入门
+I079,C11,B067,Apple Watch Series 10,T4,3499,通用,实用首选
+I080,C11,,Tudor Black Bay 58,T4,38000,男,机械表入门高奢
+I081,C12,B061,Muji 羊毛混纺围巾,T1,199,通用,
+I082,C12,B028,Acne Studios mini围巾,T3,1200,女/男,粉色条纹经典
+I083,C12,B016,Burberry 经典格纹围巾(纯羊绒小款),T4,3800,女/男,节日礼经典
+I084,C12,B001,Hermès Carré 90丝巾,T4,5300,女,丝巾天花板
+I085,C12,B020,Loro Piana 羊绒围巾,T4,7500,通用,顶级羊绒
+I086,C13,,Ray-Ban Wayfarer/Aviator,T2,900,通用,经典款 安全选择
+I087,C13,B058,Gentle Monster 入门款,T3,1500,通用,设计感强
+I088,C13,B018,Tom Ford 太阳镜,T4,5500,通用,
+I089,C15,B039,茶里 CHALI 节日礼盒,T1,150,通用,平价伴手礼
+I090,C15,,小罐茶 多泡装/银罐,T2,500,长辈/商务,
+I091,C15,,TWG Tea 礼盒装,T2,800,女/商务,新加坡品牌 包装精致
+I092,C15,,小罐茶 大师作系列,T3,1800,长辈/商务,
+I093,C15,,顶级武夷山岩茶/老白茶饼,T4,6000,长辈/商务,
+I094,C17,,黄尾袋鼠 Yellow Tail,T1,100,通用,日常餐酒
+I095,C17,,Penfolds 奔富 Bin 8/28,T2,600,通用,入门澳洲红酒
+I096,C17,,Penfolds Bin 389,T3,1500,商务,
+I097,C17,,Opus One Overture副牌,T3,2500,商务/红酒爱好,
+I098,C17,,Penfolds Grange,T4,6500,商务/红酒爱好,
+I099,C17,,Krug Grande Cuvée 香槟,T4,4500,商务/庆祝,
+I100,C18,B073,LAMY Safari 钢笔,T1,250,学生/职场新人,德系入门钢笔
+I101,C18,B074,Pilot Kakuno 钢笔,T1,100,学生,
+I102,C18,B076,Kaweco Sport 钢笔,T2,400,通用,口袋钢笔
+I103,C18,B073,LAMY 2000 钢笔,T2,900,职场,德系经典
+I104,C18,B074,Pilot Custom 74,T3,1500,职场,日系性价比之王
+I105,C18,B075,Parker Sonnet 系列,T3,2000,商务,
+I106,C18,B072,Montblanc 大班146/149,T4,6500,商务/领导,商务送礼天花板
+I107,C18,B040,Hobonichi Techo 手帐套装,T2,600,女/学生,日系手帐文化
+I108,C18,B041,Smythson Panama notebook,T3,2000,商务/文艺,英国王室款
+I109,C19,B071,Anker 充电宝/MagSafe支架,T1,180,通用,实用送男生
+I110,C19,B067,AirPods 3,T2,999,通用,Apple入门
+I111,C19,B067,AirPods Pro 2,T3,1799,通用,通用送礼安全卡
+I112,C19,,Kindle Paperwhite,T3,1500,阅读爱好,
+I113,C19,B068,Sony WF-1000XM5,T3,1999,通用,降噪标杆
+I114,C19,B067,AirPods Max,T4,4399,音乐/通勤,
+I115,C19,B070,B&O Beoplay H100,T4,8000,高端商务,设计+音质顶配
+I116,C20,B061,Muji 玻璃杯/星巴克 mug,T1,120,通用,
+I117,C20,B045,Owala FreeSip 24oz,T1,200,通用,Stanley的好用平替
+I118,C20,B044,Stanley Quencher 30oz,T2,400,通用,现象级网红水杯
+I119,C20,B063,Iittala Kastehelmi 露珠杯,T2,400,女/家居,北欧设计
+I120,C20,B070,B&O Beosound A1 蓝牙音箱(配套礼),T3,2500,通用,(归入数码-跨界家居)
+I121,C21,B046,Jellycat Bashful Bunny 小号,T1,199,女/儿童,治愈系入门
+I122,C21,B047,Pop Mart Skullpanda 盲盒,T1,69,女/年轻人,
+I123,C21,B046,Jellycat Bashful Bunny 中号/大号,T2,500,女/儿童,
+I124,C21,B047,Labubu Macaron 系列,T2,599,年轻人,二级市场热门
+I125,C21,B046,Jellycat Huge Bunny,T3,1800,女,
+I126,C21,B047,Labubu 隐藏款/稀有款 二手,T4,5000,潮玩爱好,二级市场价
+I127,C23,B063,Iittala Birds by Toikka 小型,T3,1500,女/家居,
+I128,C23,B062,Marimekko Unikko 印花靠垫/餐巾环,T2,400,家居/乔迁,
+I129,C24,B064,Le Creuset 经典铸铁锅 22cm,T3,2500,新婚/乔迁,
+I130,C24,B065,Bodum 双层玻璃杯一对,T1,180,通用,
+I131,C25,B021,Aesop 香芹籽护手霜+沐浴礼盒,T2,650,通用,安全公司礼
+I132,C25,B061,Muji 香薰+蜡烛礼盒,T1,200,通用,
+I133,C25,B037,观夏 节日限定礼盒,T2,800,女,
+I134,C25,B001,Hermès 香水+蜡烛+小皮件 节日礼盒,T4,4500,女,品牌组合礼
+I135,C16,,Godiva/Lindt 节日礼盒,T1,180,通用,巧克力安全礼
+I136,C16,,Pierre Hermé/Patchi 高端礼盒,T2,500,女/商务,

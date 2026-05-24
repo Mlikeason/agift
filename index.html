@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>A Gift · 礼</title>
+<!-- iOS home-screen pin -->
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="礼">
+<meta name="theme-color" content="#6B5544">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FCFCFB;
+  --ink: #141414;
+  --accent: #6B5544;
+  --accent-soft: rgba(107, 85, 68, 0.08);
+  --muted: #8C8C8C;
+  --border: #D8D8D4;
+  --soft: #F4F4F2;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --serif-en: 'Cormorant Garamond', Georgia, serif;
+  --serif-cn: 'Noto Serif SC', 'PingFang SC', serif;
+  --topbar-h: 52px;
+  --progress-h: 28px;
+  --bottombar-h: 80px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+body {
+  background: #E8E8E4;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "tnum";
+}
+button { font-family: inherit; background: none; border: none; color: inherit; cursor: pointer; }
+
+#app {
+  width: 100%; max-width: 440px;
+  height: 100dvh;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+}
+@media (min-width: 441px) {
+  #app { box-shadow: 0 0 0 1px var(--border); }
+}
+
+/* Topbar */
+.topbar {
+  position: relative; z-index: 10;
+  height: var(--topbar-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px;
+  flex-shrink: 0;
+}
+.topbar .brand-mark {
+  display: flex; align-items: baseline; gap: 8px;
+}
+.topbar .brand-mark .ch { font-family: var(--serif-cn); font-size: 17px; font-weight: 500; }
+.topbar .brand-mark .en { font-family: var(--serif-en); font-style: italic; font-size: 13px; color: var(--muted); letter-spacing: 0.04em; }
+.topbar .actions { display: flex; gap: 14px; align-items: center; }
+.lang-toggle {
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 12px; color: var(--muted); letter-spacing: 0.06em;
+  display: flex; gap: 4px; align-items: center;
+}
+.lang-toggle .opt { padding: 2px 4px; }
+.lang-toggle .opt.active { color: var(--ink); }
+.lang-toggle .sep { color: var(--border); }
+.btn-close {
+  font-size: 22px; color: var(--muted); width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 300; line-height: 1;
+}
+
+/* Progress dots */
+.progress {
+  height: var(--progress-h);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  flex-shrink: 0;
+}
+.progress .dot { width: 4px; height: 4px; background: var(--border); }
+.progress .dot.active { background: var(--ink); width: 14px; }
+.progress .dot.past { background: var(--accent); }
+
+/* Main content area */
+.screen {
+  flex: 1;
+  min-height: 0;
+  display: flex; flex-direction: column;
+  padding: 8px 28px 0;
+  overflow: hidden;
+}
+.screen.welcome-screen, .screen.result-screen { padding: 0; }
+
+.fade-up > * { opacity: 0; transform: translateY(8px); animation: fu 0.55s ease forwards; }
+.fade-up > *:nth-child(1) { animation-delay: 0.04s; }
+.fade-up > *:nth-child(2) { animation-delay: 0.10s; }
+.fade-up > *:nth-child(3) { animation-delay: 0.18s; }
+.fade-up > *:nth-child(4) { animation-delay: 0.26s; }
+.fade-up > *:nth-child(5) { animation-delay: 0.34s; }
+.fade-up > *:nth-child(n+6) { animation-delay: 0.42s; }
+@keyframes fu { to { opacity: 1; transform: translateY(0); } }
+
+.step-head { margin: 6px 0 20px; flex-shrink: 0; }
+.step-meta { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+.step-meta .num {
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 13px; color: var(--accent); letter-spacing: 0.10em;
+}
+.step-meta .of {
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 11px; color: var(--muted); letter-spacing: 0.06em;
+}
+.step-meta::after {
+  content: ''; flex: 1; height: 1px; background: var(--border); margin-left: 4px;
+}
+.step-title {
+  font-family: var(--serif-cn); font-size: 25px; font-weight: 500;
+  line-height: 1.3; letter-spacing: 0.02em;
+}
+.step-title.lang-en { font-family: var(--serif-en); font-style: italic; font-weight: 500; font-size: 30px; letter-spacing: 0.01em; }
+.step-sub {
+  font-family: var(--serif-en); font-style: italic; font-size: 15px;
+  color: var(--accent); margin-top: 6px; letter-spacing: 0.01em;
+}
+.step-sub.lang-en { font-family: var(--serif-cn); font-style: normal; color: var(--muted); font-size: 13px; }
+.step-hint { font-size: 11.5px; color: var(--muted); margin-top: 12px; letter-spacing: 0.02em; line-height: 1.6; }
+
+/* Tag groups */
+.tag-groups { flex: 1; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; padding-bottom: 12px; }
+.tag-groups::-webkit-scrollbar { display: none; }
+.tag-group .group-label {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px; font-weight: 500;
+}
+.tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  font-size: 12.5px;
+  color: var(--ink);
+  background: var(--bg);
+  white-space: nowrap;
+  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.12s ease;
+  font-family: var(--sans);
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+}
+.tag.selected { background: var(--ink); color: #fff; border-color: var(--ink); }
+.tag:hover:not(.selected) { border-color: var(--ink); background: var(--soft); }
+.tag:active { transform: scale(0.97); }
+.tag.disabled { opacity: 0.4; pointer-events: none; }
+
+/* Slider */
+.slider-wrap { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 20px 4px; }
+.slider-value { text-align: center; margin-bottom: 36px; min-height: 80px; display: flex; flex-direction: column; justify-content: flex-end; }
+.slider-value .num {
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 44px; color: var(--accent); font-weight: 400; line-height: 1;
+}
+.slider-value .sublabel {
+  font-family: var(--serif-cn); font-size: 13px; color: var(--muted);
+  margin-top: 10px; letter-spacing: 0.06em; min-height: 18px;
+}
+
+.slider-track { position: relative; height: 40px; cursor: pointer; }
+.slider-line { position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--border); transform: translateY(-50%); }
+.slider-fill { position: absolute; top: 50%; left: 0; height: 1px; background: var(--accent); transform: translateY(-50%); }
+.slider-thumb {
+  position: absolute; top: 50%; width: 18px; height: 18px;
+  background: var(--bg); border: 1.5px solid var(--ink);
+  transform: translate(-50%, -50%);
+  cursor: grab; transition: transform 0.1s ease;
+}
+.slider-thumb.grab { transform: translate(-50%, -50%) scale(1.15); cursor: grabbing; }
+.slider-ticks { display: flex; justify-content: space-between; margin-top: 6px; padding: 0 1px; }
+.slider-tick { width: 1px; height: 5px; background: var(--border); }
+.slider-tick.major { height: 8px; background: var(--muted); }
+.slider-legend { display: flex; justify-content: space-between; margin-top: 8px; font-family: var(--serif-en); font-style: italic; font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+
+/* Closeness slider — labels */
+.slider-labels {
+  margin-top: 14px;
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  font-size: 9px; color: var(--muted); text-align: center;
+}
+.slider-labels span { padding: 0 2px; line-height: 1.2; }
+.slider-labels span.active { color: var(--ink); font-weight: 500; }
+
+/* Brand step */
+.brand-step { flex: 1; display: flex; flex-direction: column; min-height: 0; gap: 8px; }
+.brand-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  flex: 1; min-height: 0;
+  align-content: start;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+.brand-grid::-webkit-scrollbar { width: 0; }
+.brand-card {
+  border: 1px solid var(--border);
+  padding: 14px 10px 0;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  position: relative;
+  background: var(--bg);
+  transition: border-color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+  min-height: 92px;
+}
+.brand-card.state-own { border-color: var(--ink); background: var(--soft); }
+.brand-card.state-want { border-color: var(--accent); background: var(--accent-soft); }
+.brand-card.state-skip { opacity: 0.42; }
+.brand-name {
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 14px; color: var(--ink); letter-spacing: 0.02em;
+  text-align: center; line-height: 1.25;
+  flex: 1; display: flex; align-items: center; padding: 2px 0;
+}
+.brand-tier {
+  position: absolute; top: 6px; right: 8px;
+  font-size: 8px; color: var(--muted);
+  letter-spacing: 0.18em; text-transform: uppercase;
+  font-family: var(--serif-en); font-style: italic;
+}
+.brand-actions {
+  display: flex; gap: 0; width: 100%; margin-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.brand-action {
+  flex: 1;
+  border-right: 1px solid var(--border);
+  padding: 8px 0;
+  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.brand-action:last-child { border-right: none; }
+.brand-action:hover:not(.active) { background: var(--soft); color: var(--ink); }
+.brand-action.active { color: #fff; }
+.brand-action.active.own { background: var(--ink); }
+.brand-action.active.want { background: var(--accent); }
+.brand-action.active.skip { background: var(--muted); }
+
+.swap-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 4px 0;
+  flex-shrink: 0;
+}
+.swap-btn {
+  font-size: 11px; color: var(--accent);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 6px 0; border-bottom: 1px solid var(--accent);
+}
+.batch-counter {
+  font-size: 11px; color: var(--muted);
+  font-family: var(--serif-en); font-style: italic;
+  letter-spacing: 0.04em;
+}
+
+.accumulator {
+  padding: 10px 0 4px;
+  border-top: 1px solid var(--border);
+  max-height: 100px;
+  display: flex; flex-direction: column;
+  flex-shrink: 0;
+}
+.accumulator-label {
+  font-size: 9px; color: var(--muted);
+  letter-spacing: 0.18em; text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.accumulator-label .count {
+  font-family: var(--serif-en); font-style: italic;
+  text-transform: none; letter-spacing: 0.04em;
+  font-size: 12px; color: var(--accent);
+}
+.chips { display: flex; flex-wrap: wrap; gap: 5px; overflow-y: auto; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 9px 4px 10px; font-size: 11px;
+  border: 1px solid var(--border);
+  font-family: var(--serif-en); font-style: italic; letter-spacing: 0.02em;
+  line-height: 1.2;
+  transition: opacity 0.15s ease;
+}
+.chip.own { background: var(--ink); color: #fff; border-color: var(--ink); }
+.chip.want { background: var(--accent); color: #fff; border-color: var(--accent); }
+.chip.skip { background: var(--soft); color: var(--muted); }
+.chip .x { font-style: normal; opacity: 0.55; cursor: pointer; font-size: 14px; line-height: 1; padding: 0 2px; }
+.chip .x:hover { opacity: 1; }
+
+/* Bottom bar */
+.bottombar {
+  height: var(--bottombar-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px 24px;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.btn-back {
+  font-size: 11px; color: var(--muted);
+  letter-spacing: 0.10em; text-transform: uppercase;
+  padding: 12px 14px;
+}
+.btn-back .arrow { margin-right: 6px; }
+.btn-next {
+  flex: 1; max-width: 260px; margin-left: auto;
+  background: var(--ink); color: #fff;
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 16px 22px; font-weight: 500;
+  transition: background-color 0.18s ease;
+}
+.btn-next:not(:disabled):hover { background: var(--accent); }
+.btn-next:disabled { background: var(--soft); cursor: not-allowed; color: var(--muted); border: 1px solid var(--border); }
+.btn-next .arrow { margin-left: 10px; }
+.btn-back { transition: color 0.18s ease; }
+.btn-back:hover { color: var(--ink); }
+
+/* Welcome */
+.welcome {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 28px; text-align: center; padding: 40px 32px;
+}
+.welcome-mark {
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  padding: 24px 40px 28px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.welcome-char {
+  font-family: var(--serif-cn); font-size: 64px; font-weight: 400;
+  color: var(--ink); line-height: 1;
+}
+.welcome-name {
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 22px; letter-spacing: 0.10em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+.welcome-tagline {
+  font-family: var(--serif-cn); font-size: 13px; color: var(--ink);
+  max-width: 260px; line-height: 1.9; letter-spacing: 0.04em;
+}
+.welcome-tagline .en {
+  display: block; font-family: var(--serif-en); font-style: italic;
+  font-size: 12px; margin-top: 10px; color: var(--muted);
+  letter-spacing: 0.02em;
+}
+.welcome-cta {
+  margin-top: 4px; background: var(--ink); color: #fff;
+  padding: 16px 52px;
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  transition: background-color 0.18s ease;
+}
+.welcome-cta:hover { background: var(--accent); }
+.welcome-foot {
+  position: absolute; bottom: 22px; left: 0; right: 0;
+  text-align: center;
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 10px; color: var(--muted); letter-spacing: 0.14em;
+}
+
+/* Result page */
+.result-screen { position: relative; overflow: hidden; }
+.result-deck {
+  position: relative; width: 100%; height: 100%;
+  touch-action: pan-y;
+}
+.result-card {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  background: var(--bg);
+  transition: transform 0.42s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
+  overflow-y: auto;
+  padding-bottom: 60px;
+}
+.result-card::-webkit-scrollbar { display: none; }
+.result-meta {
+  padding: 12px 28px 8px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.result-pos {
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 12px; color: var(--muted); letter-spacing: 0.04em;
+}
+.result-score {
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 22px; color: var(--accent); letter-spacing: 0.02em;
+}
+.result-img {
+  margin: 8px 28px 0;
+  aspect-ratio: 4/3.2;
+  background: var(--soft);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.result-img svg { width: 38%; height: 38%; stroke: var(--accent); fill: none; stroke-width: 1; }
+.result-cat {
+  padding: 16px 28px 4px;
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 10px; color: var(--accent);
+  letter-spacing: 0.20em; text-transform: uppercase;
+}
+.result-brand {
+  padding: 0 28px;
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 12px; color: var(--muted);
+  letter-spacing: 0.14em; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.result-name {
+  padding: 0 28px;
+  font-family: var(--serif-cn); font-size: 18px; font-weight: 500;
+  line-height: 1.35; margin-bottom: 4px;
+}
+.result-name.lang-en { font-family: var(--serif-en); font-style: italic; font-size: 22px; }
+.result-name-alt {
+  padding: 0 28px;
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 13px; color: var(--muted); margin-bottom: 8px;
+}
+.result-name-alt.lang-en { font-family: var(--serif-cn); font-style: normal; font-size: 13px; }
+.result-price {
+  padding: 0 28px;
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 19px; color: var(--ink); margin-bottom: 14px;
+}
+.result-desc {
+  padding: 0 28px;
+  font-size: 12px; color: var(--ink); line-height: 1.7;
+  margin-bottom: 14px;
+  font-family: var(--serif-cn);
+}
+.result-desc.lang-en { font-family: var(--sans); font-size: 13px; color: var(--ink); }
+.result-tags {
+  padding: 0 28px;
+  display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 22px;
+}
+.result-tags .tag { padding: 5px 10px; font-size: 10px; }
+.result-tags .tag.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+.result-cta { margin: 6px 28px 28px; }
+.result-cta button {
+  width: 100%; background: var(--ink); color: #fff;
+  padding: 15px; font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+}
+.result-cta .platform {
+  font-family: var(--serif-en); font-style: italic;
+  margin-left: 6px; text-transform: none; letter-spacing: 0.02em; color: rgba(255,255,255,0.7);
+}
+
+/* Refinement card */
+.refine-card { padding: 28px; display: flex; flex-direction: column; height: 100%; }
+.refine-title {
+  font-family: var(--serif-cn); font-size: 22px; font-weight: 500;
+  margin-top: 28px; margin-bottom: 4px;
+}
+.refine-title.lang-en { font-family: var(--serif-en); font-style: italic; font-size: 28px; }
+.refine-title .alt {
+  display: block; font-family: var(--serif-en); font-style: italic;
+  font-size: 15px; color: var(--accent); margin-top: 6px; font-weight: 400;
+}
+.refine-title.lang-en .alt { font-family: var(--serif-cn); font-style: normal; font-size: 13px; color: var(--muted); }
+.refine-list { margin-top: 28px; }
+.refine-item {
+  padding: 18px 0; border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 14px; cursor: pointer;
+  letter-spacing: 0.02em;
+}
+.refine-item:hover { color: var(--accent); }
+.refine-item .arrow { color: var(--muted); font-family: var(--serif-en); font-style: italic; }
+.refine-tip {
+  margin-top: auto;
+  background: var(--soft); border-left: 2px solid var(--accent);
+  padding: 18px 20px;
+  font-family: var(--serif-cn); font-size: 13px; color: var(--ink);
+  line-height: 1.8; letter-spacing: 0.02em;
+}
+.refine-tip .alt {
+  display: block; font-family: var(--serif-en); font-style: italic;
+  font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.6;
+}
+
+/* Result dots */
+.result-dots {
+  position: absolute; bottom: 18px; left: 0; right: 0;
+  display: flex; justify-content: center; gap: 6px; z-index: 5;
+  pointer-events: none;
+}
+.result-dots .dot { width: 4px; height: 4px; background: var(--border); cursor: pointer; pointer-events: auto; transition: all 0.3s ease; }
+.result-dots .dot.active { background: var(--ink); width: 14px; }
+
+.result-topbar {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 10;
+  background: linear-gradient(to bottom, var(--bg) 60%, transparent);
+}
+
+/* Small screen */
+@media (max-height: 700px) {
+  .step-title { font-size: 22px; }
+  .step-head { margin-bottom: 12px; }
+  :root { --bottombar-h: 72px; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// ============== I18N ==============
+const T = {
+  brand: { zh: '礼', en: 'A GIFT' },
+  brandSub: { zh: '送礼决策', en: 'A Gift' },
+  begin: { zh: '开 始', en: 'BEGIN' },
+  next: { zh: '下一步', en: 'NEXT' },
+  back: { zh: '返回', en: 'BACK' },
+  step: { zh: '第', en: 'STEP' },
+  ofTotal: { zh: '/ 共 8 步', en: '/ OF 08' },
+  welcomeTagline: {
+    zh: '别犹豫了，让我们一起帮你挑一份恰到好处的礼物。',
+    en: "Stop deliberating. Let's find the gift that feels just right."
+  },
+  // step titles
+  s1Title: { zh: '想送一份什么样的礼？', en: 'What kind of gift?' },
+  s1Sub: { zh: 'Set the direction', en: '先定个方向' },
+  s1Hint: { zh: '从下面选 1–2 个意图标签', en: 'Pick 1–2 intent tags below' },
+
+  s2Title: { zh: '送给谁？', en: 'Who is it for?' },
+  s2Sub: { zh: 'The recipient', en: '收礼人' },
+  s2Hint: { zh: '只选一项', en: 'Single select' },
+
+  s3Title: { zh: '你们有多熟？', en: 'How close?' },
+  s3Sub: { zh: 'Closeness', en: '亲密度' },
+  s3Hint: { zh: '滑动选择你们关系的份量', en: 'Slide to set the weight of your relationship' },
+
+  s4Title: { zh: '什么场合？', en: 'What occasion?' },
+  s4Sub: { zh: 'The moment', en: '时机' },
+  s4Hint: { zh: '只选一项', en: 'Single select' },
+
+  s5Title: { zh: '预算大概多少？', en: 'Your budget?' },
+  s5Sub: { zh: 'Budget', en: '预算' },
+  s5Hint: { zh: '不必精确，留点呼吸感', en: 'Approximate is fine' },
+
+  s6Title: { zh: 'TA 是什么样的人？', en: 'Who are they?' },
+  s6Sub: { zh: 'Recipient tags', en: '收礼人特质' },
+  s6Hint: { zh: '至少选 3 个特质', en: 'Choose at least 3 traits' },
+
+  s7Title: { zh: '哪些已经送过？', en: 'Given before?' },
+  s7Sub: { zh: 'Avoid repeats', en: '避免重复' },
+  s7Hint: { zh: '可跳过（选过的品类将从推荐中排除）', en: 'Optional — selected categories will be excluded' },
+  skip: { zh: '跳过', en: 'SKIP' },
+
+  s8Title: { zh: '关于这些品牌', en: 'About these brands' },
+  s8Sub: { zh: 'Brand relation', en: '品牌关系' },
+  s8Hint: { zh: '点击品牌下方的标签：拥有 / 想要 / 跳过', en: 'Tap below each brand: own · want · skip' },
+  swapBatch: { zh: '换一批', en: 'SWAP BATCH' },
+  accumLabel: { zh: '已标记品牌', en: 'TAGGED BRANDS' },
+  ownLabel: { zh: '拥有', en: 'OWN' },
+  wantLabel: { zh: '想要', en: 'WANT' },
+  skipLabel: { zh: '跳过', en: 'SKIP' },
+
+  // intent tags
+  intents: {
+    emotion: { zh: '情感', en: 'EMOTION' },
+    surprise: { zh: '惊喜', en: 'SURPRISE' },
+    safe: { zh: '稳妥', en: 'SAFE' },
+    useful: { zh: '实用', en: 'USEFUL' },
+  },
+  // recipient tags
+  recipients: {
+    close: { zh: '亲密', en: 'CLOSE' },
+    family: { zh: '家人', en: 'FAMILY' },
+    social: { zh: '社交', en: 'SOCIAL' },
+  },
+  closenessLabels: {
+    zh: ['点头之交', '熟人', '朋友', '好友', '挚友', '家人', '灵魂伴侣'],
+    en: ['Nodding', 'Familiar', 'Friend', 'Close', 'Confidant', 'Family', 'Soulmate']
+  },
+  occasions: {
+    milestones: { zh: '里程碑', en: 'MILESTONES' },
+    festivals: { zh: '节日', en: 'FESTIVALS' },
+    gestures: { zh: '心意', en: 'GESTURES' },
+  },
+  personas: {
+    taste: { zh: '品味', en: 'TASTE' },
+    lifestyle: { zh: '生活方式', en: 'LIFESTYLE' },
+    personality: { zh: '性格', en: 'PERSONALITY' },
+  },
+  result: { zh: '结果', en: 'RESULT' },
+  mainPick: { zh: '主推', en: 'MAIN PICK' },
+  alt: { zh: '备选', en: 'ALTERNATE' },
+  goBuy: { zh: '去购买', en: 'GO TO BUY' },
+  refineTitle: { zh: '不太满意？再调一下', en: 'Adjust the recipe' },
+  refineSub: { zh: 'Adjust the recipe', en: '不太满意？再调一下' },
+  refineItems: [
+    { zh: '重设礼物意图', en: 'Reset gift intent' },
+    { zh: '调整预算', en: 'Adjust budget' },
+    { zh: '修改收礼人特质', en: 'Edit recipient tags' },
+    { zh: '修改品牌偏好', en: 'Edit brand preferences' },
+    { zh: '重新开始', en: 'Start over' },
+  ],
+};
+
+// ============== TAG DEFINITIONS ==============
+const INTENTS = {
+  emotion: [
+    { id: 'romantic', zh: '浪漫', en: 'Romantic' },
+    { id: 'sweet', zh: '甜蜜', en: 'Sweet' },
+    { id: 'warm', zh: '温暖', en: 'Warm' },
+  ],
+  surprise: [
+    { id: 'unforgettable', zh: '难忘', en: 'Unforgettable' },
+    { id: 'bold', zh: '大胆', en: 'Bold' },
+    { id: 'playful', zh: '俏皮', en: 'Playful' },
+  ],
+  safe: [
+    { id: 'tasteful', zh: '有品', en: 'Tasteful' },
+    { id: 'classic', zh: '经典', en: 'Classic' },
+    { id: 'respectful', zh: '得体', en: 'Respectful' },
+  ],
+  useful: [
+    { id: 'daily', zh: '日常', en: 'Daily-use' },
+    { id: 'practical', zh: '实用', en: 'Practical' },
+    { id: 'treat', zh: '犒赏', en: 'A Treat' },
+  ],
+};
+
+const RECIPIENTS = {
+  close: [
+    { id: 'partner_f', zh: '女朋友/妻子', en: 'Partner (F)' },
+    { id: 'partner_m', zh: '男朋友/丈夫', en: 'Partner (M)' },
+    { id: 'bestfriend', zh: '挚友', en: 'Best friend' },
+  ],
+  family: [
+    { id: 'mom', zh: '母亲', en: 'Mother' },
+    { id: 'dad', zh: '父亲', en: 'Father' },
+    { id: 'inlaw', zh: '岳父岳母 / 公婆', en: 'In-laws' },
+    { id: 'sibling', zh: '兄弟姐妹', en: 'Sibling' },
+  ],
+  social: [
+    { id: 'colleague', zh: '同事', en: 'Colleague' },
+    { id: 'boss', zh: '领导', en: 'Boss' },
+    { id: 'client', zh: '客户', en: 'Client' },
+  ],
+};
+
+const OCCASIONS = {
+  milestones: [
+    { id: 'birthday', zh: '生日', en: 'Birthday' },
+    { id: 'anniv', zh: '周年', en: 'Anniversary' },
+    { id: 'wedding', zh: '婚礼', en: 'Wedding' },
+    { id: 'promotion', zh: '升职', en: 'Promotion' },
+    { id: 'graduation', zh: '毕业', en: 'Graduation' },
+  ],
+  festivals: [
+    { id: 'cny', zh: '春节', en: 'CNY' },
+    { id: 'valentine', zh: '情人节', en: "Valentine's" },
+    { id: 'mother', zh: '母亲节', en: "Mother's Day" },
+    { id: 'mid_autumn', zh: '中秋', en: 'Mid-Autumn' },
+    { id: 'christmas', zh: '圣诞', en: 'Christmas' },
+  ],
+  gestures: [
+    { id: 'apology', zh: '道歉', en: 'Apology' },
+    { id: 'thanks', zh: '致谢', en: 'Thank you' },
+    { id: 'goodbye', zh: '送别', en: 'Farewell' },
+    { id: 'welcome', zh: '接风', en: 'Welcome' },
+  ],
+};
+
+const PERSONAS = {
+  taste: [
+    { id: 'minimal', zh: '极简', en: 'Minimal' },
+    { id: 'classic_t', zh: '经典', en: 'Classic' },
+    { id: 'avant', zh: '前卫', en: 'Avant-garde' },
+    { id: 'vintage', zh: '复古', en: 'Vintage' },
+    { id: 'sweet_t', zh: '甜美', en: 'Sweet' },
+  ],
+  lifestyle: [
+    { id: 'reader', zh: '爱读书', en: 'Reader' },
+    { id: 'foodie', zh: '美食家', en: 'Foodie' },
+    { id: 'athlete', zh: '爱运动', en: 'Athletic' },
+    { id: 'traveller', zh: '爱旅行', en: 'Traveller' },
+    { id: 'homebody', zh: '居家', en: 'Stay-at-home' },
+    { id: 'tech_l', zh: '数码控', en: 'Tech-curious' },
+  ],
+  personality: [
+    { id: 'warm_p', zh: '温暖', en: 'Warm' },
+    { id: 'cool_p', zh: '高冷', en: 'Cool-headed' },
+    { id: 'playful_p', zh: '俏皮', en: 'Playful' },
+    { id: 'practical_p', zh: '务实', en: 'Practical' },
+    { id: 'romantic_p', zh: '浪漫', en: 'Romantic' },
+  ],
+};
+
+const GIVEN_BEFORE = [
+  { id: 'fragrance', zh: '香水', en: 'Perfume' },
+  { id: 'candle', zh: '香薰蜡烛', en: 'Candle' },
+  { id: 'bag', zh: '包', en: 'Bag' },
+  { id: 'jewellery', zh: '首饰', en: 'Jewellery' },
+  { id: 'watch', zh: '手表', en: 'Watch' },
+  { id: 'skincare', zh: '护肤/口红', en: 'Skincare' },
+  { id: 'wine', zh: '酒', en: 'Wine' },
+  { id: 'tea', zh: '茶', en: 'Tea' },
+  { id: 'tech', zh: '数码', en: 'Tech' },
+  { id: 'pen', zh: '文具', en: 'Stationery' },
+];
+
+// ============== BRAND POOL (30) ==============
+const BRANDS = [
+  { id: 'B001', name: 'Hermès',           name_zh: '爱马仕',     tier: 'luxury' },
+  { id: 'B002', name: 'Chanel',           name_zh: '香奈儿',     tier: 'luxury' },
+  { id: 'B003', name: 'Louis Vuitton',    name_zh: '路易威登',   tier: 'luxury' },
+  { id: 'B004', name: 'Dior',             name_zh: '迪奥',       tier: 'luxury' },
+  { id: 'B008', name: 'Cartier',          name_zh: '卡地亚',     tier: 'luxury' },
+  { id: 'B009', name: 'Tiffany & Co.',    name_zh: '蒂芙尼',     tier: 'luxury' },
+  { id: 'B010', name: 'Van Cleef & Arpels', name_zh: '梵克雅宝', tier: 'luxury' },
+  { id: 'B015', name: 'Loewe',            name_zh: '罗意威',     tier: 'luxury' },
+  { id: 'B016', name: 'Burberry',         name_zh: '博柏利',     tier: 'luxury' },
+  { id: 'B018', name: 'Tom Ford',         name_zh: '汤姆福特',   tier: 'luxury' },
+  { id: 'B021', name: 'Aesop',            name_zh: '伊索',       tier: 'niche' },
+  { id: 'B022', name: 'Le Labo',          name_zh: '',           tier: 'niche' },
+  { id: 'B023', name: 'Diptyque',         name_zh: '蒂普提克',   tier: 'niche' },
+  { id: 'B024', name: 'Byredo',           name_zh: '百瑞德',     tier: 'niche' },
+  { id: 'B025', name: 'Maison Margiela',  name_zh: 'Replica',    tier: 'niche' },
+  { id: 'B026', name: 'MFK',              name_zh: '柯诺德金',   tier: 'niche' },
+  { id: 'B028', name: 'Acne Studios',     name_zh: '',           tier: 'niche' },
+  { id: 'B032', name: 'Issey Miyake',     name_zh: '三宅一生',   tier: 'niche' },
+  { id: 'B035', name: 'Polène',           name_zh: '',           tier: 'niche' },
+  { id: 'B036', name: 'Songmont',         name_zh: '山下有松',   tier: 'niche' },
+  { id: 'B037', name: '观夏 To Summer',   name_zh: '',           tier: 'niche' },
+  { id: 'B044', name: 'Stanley',          name_zh: '',           tier: 'trendy' },
+  { id: 'B046', name: 'Jellycat',         name_zh: '',           tier: 'trendy' },
+  { id: 'B047', name: 'Pop Mart',         name_zh: '泡泡玛特',   tier: 'trendy' },
+  { id: 'B049', name: 'On Running',       name_zh: '昂跑',       tier: 'trendy' },
+  { id: 'B051', name: "Arc'teryx",        name_zh: '始祖鸟',     tier: 'trendy' },
+  { id: 'B055', name: 'Charles & Keith',  name_zh: '小CK',       tier: 'trendy' },
+  { id: 'B056', name: 'Coach',            name_zh: '蔻驰',       tier: 'trendy' },
+  { id: 'B059', name: 'APM Monaco',       name_zh: '',           tier: 'trendy' },
+  { id: 'B067', name: 'Apple',            name_zh: '苹果',       tier: 'trendy' },
+];
+
+// Additional brands referenced by items but not in the 30-pool above
+const BRAND_EXTRA = [
+  { id: 'B011', name: 'Bvlgari',          name_zh: '宝格丽',     tier: 'luxury' },
+  { id: 'B012', name: 'Saint Laurent',    name_zh: 'YSL',        tier: 'luxury' },
+  { id: 'B019', name: 'Goyard',           name_zh: '戈雅',       tier: 'luxury' },
+  { id: 'B039', name: 'Penfolds / TWG',   name_zh: '奔富 · TWG', tier: 'niche' },
+  { id: 'B040', name: 'Hobonichi',        name_zh: '',           tier: 'niche' },
+  { id: 'B041', name: 'Smythson',         name_zh: '',           tier: 'niche' },
+  { id: 'B045', name: 'Owala',            name_zh: '',           tier: 'trendy' },
+  { id: 'B058', name: 'Gentle Monster',   name_zh: '',           tier: 'trendy' },
+  { id: 'B061', name: 'Muji',             name_zh: '无印良品',   tier: 'lifestyle' },
+  { id: 'B062', name: 'Marimekko',        name_zh: '',           tier: 'lifestyle' },
+  { id: 'B063', name: 'Iittala',          name_zh: '',           tier: 'lifestyle' },
+  { id: 'B064', name: 'Le Creuset',       name_zh: '酷彩',       tier: 'lifestyle' },
+  { id: 'B068', name: 'Sony',             name_zh: '索尼',       tier: 'tech' },
+  { id: 'B072', name: 'Montblanc',        name_zh: '万宝龙',     tier: 'pen' },
+  { id: 'B073', name: 'LAMY',             name_zh: '凌美',       tier: 'pen' },
+  { id: 'B078', name: 'SK-II',            name_zh: '',           tier: 'beauty' },
+  { id: 'B079', name: 'La Mer',           name_zh: '海蓝之谜',   tier: 'beauty' },
+];
+const BRAND_BY_ID = Object.fromEntries([...BRANDS, ...BRAND_EXTRA].map(b => [b.id, b]));
+
+// ============== CATEGORY MAPPING ==============
+// maps source category_id → PRD category
+const CAT_MAP = {
+  C01: 'fragrance',  C02: 'home',       C03: 'skincare',   C04: 'skincare',
+  C05: 'bag',        C06: 'bag',        C07: 'jewellery',  C08: 'jewellery',
+  C09: 'jewellery',  C10: 'jewellery',  C11: 'watch',      C12: 'clothing',
+  C13: 'clothing',   C14: 'clothing',   C15: 'food',       C16: 'food',
+  C17: 'food',       C18: 'home',       C19: 'tech',       C20: 'home',
+  C21: 'home',       C22: 'home',       C23: 'home',       C24: 'home',
+  C25: 'home',
+};
+
+const CAT_LABEL = {
+  fragrance:  { zh: '香氛', en: 'Fragrance' },
+  skincare:   { zh: '护肤', en: 'Skincare' },
+  jewellery:  { zh: '首饰', en: 'Jewellery' },
+  bag:        { zh: '包袋', en: 'Bag' },
+  watch:      { zh: '腕表', en: 'Watch' },
+  clothing:   { zh: '服饰', en: 'Apparel' },
+  home:       { zh: '家居', en: 'Home' },
+  food:       { zh: '食饮', en: 'Food & Wine' },
+  tech:       { zh: '数码', en: 'Tech' },
+};
+
+// ============== ITEMS ==============
+// id, cat (source), brand, name_zh, name_en (optional, falls back to brand + cat), price_rmb, recipient (f/m/u), desc_zh, desc_en
+const ITEMS = [
+  // Fragrance
+  { id: 'I004', cat:'C01', brand:'B023', name_zh:'杜桑/影中之水 EDP 7.5ml', name_en:'Eau Duelle / Do Son 7.5ml', price:380, r:'f', tags:['romantic','tasteful'] },
+  { id: 'I005', cat:'C01', brand:'B037', name_zh:'昆仑煮雪 EDP 50ml', name_en:'Kunlun Snow EDP 50ml', price:598, r:'u', tags:['tasteful','classic'] },
+  { id: 'I006', cat:'C01', brand:'B025', name_zh:'慵懒周末/壁炉边 30ml', name_en:'Replica Lazy Sunday / By the Fireplace 30ml', price:790, r:'u', tags:['warm','tasteful'] },
+  { id: 'I008', cat:'C01', brand:'B004', name_zh:'迪奥真我 50ml', name_en:"J'adore EDP 50ml", price:1200, r:'f', tags:['classic','romantic'] },
+  { id: 'I009', cat:'C01', brand:'B002', name_zh:'可可小姐 EDP 50ml', name_en:'Coco Mademoiselle EDP 50ml', price:1450, r:'f', tags:['classic','tasteful'] },
+  { id: 'I010', cat:'C01', brand:'B022', name_zh:'Santal 33 EDP 50ml', name_en:'Santal 33 EDP 50ml', price:1980, r:'u', tags:['tasteful','bold'] },
+  { id: 'I011', cat:'C01', brand:'B024', name_zh:'Mojave Ghost EDP 50ml', name_en:'Mojave Ghost EDP 50ml', price:1900, r:'f', tags:['tasteful','daily'] },
+  { id: 'I012', cat:'C01', brand:'B026', name_zh:'Baccarat Rouge 540 EDP 70ml', name_en:'Baccarat Rouge 540 EDP 70ml', price:2800, r:'f', tags:['bold','tasteful'] },
+  { id: 'I013', cat:'C01', brand:'B018', name_zh:'黑兰花 EDP 100ml', name_en:'Black Orchid EDP 100ml', price:2400, r:'f', tags:['bold','classic'] },
+
+  // Candle / home fragrance
+  { id: 'I019', cat:'C02', brand:'B023', name_zh:'Baies 黑加仑蜡烛 70g', name_en:'Baies Candle 70g', price:440, r:'u', tags:['daily','tasteful'] },
+  { id: 'I020', cat:'C02', brand:'B023', name_zh:'无花果蜡烛 190g', name_en:'Figuier Candle 190g', price:720, r:'u', tags:['daily','warm'] },
+  { id: 'I021', cat:'C02', brand:'B025', name_zh:'壁炉边蜡烛 165g', name_en:'By the Fireplace Candle 165g', price:620, r:'u', tags:['warm','tasteful'] },
+  { id: 'I022', cat:'C02', brand:'B037', name_zh:'颐和金桂蜡烛 170g', name_en:'Summer Palace Osmanthus 170g', price:498, r:'f', tags:['classic','warm'] },
+  { id: 'I023', cat:'C02', brand:'B022', name_zh:'Santal 26 蜡烛 245g', name_en:'Santal 26 Candle 245g', price:1850, r:'u', tags:['tasteful','classic'] },
+  { id: 'I025', cat:'C02', brand:'B023', name_zh:'三芯蜡烛 600g', name_en:'Three-Wick Candle 600g', price:1800, r:'u', tags:['tasteful','treat'] },
+
+  // Skincare
+  { id: 'I037', cat:'C04', brand:'B021', name_zh:'天竺葵护手霜 75ml', name_en:'Resurrection Hand Balm 75ml', price:260, r:'u', tags:['daily','practical'] },
+  { id: 'I038', cat:'C04', brand:'B078', name_zh:'神仙水 75ml', name_en:'Facial Treatment Essence 75ml', price:850, r:'f', tags:['practical','classic'] },
+  { id: 'I039', cat:'C04', brand:'B079', name_zh:'浓缩修护精华 30ml', name_en:'Concentrate 30ml', price:1900, r:'f', tags:['treat','classic'] },
+  { id: 'I040', cat:'C04', brand:'B078', name_zh:'神仙水 230ml', name_en:'Facial Treatment Essence 230ml', price:1850, r:'f', tags:['classic','daily'] },
+  { id: 'I042', cat:'C04', brand:'B079', name_zh:'经典精华面霜 100ml', name_en:'Crème de la Mer 100ml', price:5500, r:'f', tags:['treat','classic'] },
+
+  // Lipstick
+  { id: 'I029', cat:'C03', brand:'B012', name_zh:'YSL N°1 小金条', name_en:'Rouge Pur Couture N°1', price:360, r:'f', tags:['classic','sweet'] },
+  { id: 'I030', cat:'C03', brand:'B004', name_zh:'Dior 烈艳蓝金 999', name_en:'Rouge Dior 999', price:390, r:'f', tags:['classic','bold'] },
+  { id: 'I031', cat:'C03', brand:'B018', name_zh:'Tom Ford 子弹头 Casablanca', name_en:'Lip Color Casablanca', price:500, r:'f', tags:['tasteful','bold'] },
+  { id: 'I033', cat:'C03', brand:'B001', name_zh:'Hermès 唇膏 64号', name_en:'Rouge Hermès 64 Rouge Casaque', price:690, r:'f', tags:['classic','tasteful'] },
+
+  // Bag
+  { id: 'I044', cat:'C05', brand:'B055', name_zh:'Charles & Keith 半月包', name_en:'Half-Moon Bag', price:500, r:'f', tags:['daily','sweet'] },
+  { id: 'I045', cat:'C05', brand:'B036', name_zh:'松鼠包 小号', name_en:'Squirrel Bag Small', price:799, r:'f', tags:['tasteful','daily'] },
+  { id: 'I047', cat:'C05', brand:'B056', name_zh:'Coach Tabby 26', name_en:'Tabby 26', price:2500, r:'f', tags:['classic','daily'] },
+  { id: 'I048', cat:'C05', brand:'B032', name_zh:'Bao Bao Lucent 6×6', name_en:'Bao Bao Lucent 6×6', price:2800, r:'u', tags:['tasteful','bold'] },
+  { id: 'I049', cat:'C05', brand:'B035', name_zh:'Numéro Sept', name_en:'Numéro Sept', price:3000, r:'f', tags:['tasteful','classic'] },
+  { id: 'I050', cat:'C05', brand:'B003', name_zh:'LV Neverfull MM', name_en:'Neverfull MM', price:15500, r:'f', tags:['classic','practical'] },
+  { id: 'I051', cat:'C05', brand:'B015', name_zh:'Loewe Puzzle Mini', name_en:'Puzzle Mini', price:18000, r:'f', tags:['tasteful','treat'] },
+  { id: 'I053', cat:'C05', brand:'B001', name_zh:'Hermès Garden Party 30', name_en:'Garden Party 30', price:22000, r:'f', tags:['classic','treat'] },
+
+  // Wallet
+  { id: 'I057', cat:'C06', brand:'B036', name_zh:'Songmont 真皮卡包', name_en:'Leather Card Holder', price:500, r:'u', tags:['daily','tasteful'] },
+  { id: 'I060', cat:'C06', brand:'B019', name_zh:'Goyard Saint-Sulpice 卡包', name_en:'Saint-Sulpice Card Holder', price:5500, r:'u', tags:['tasteful','classic'] },
+
+  // Earrings
+  { id: 'I063', cat:'C07', brand:'B059', name_zh:'APM Monaco 小型耳钉', name_en:'Small Studs', price:500, r:'f', tags:['daily','sweet'] },
+  { id: 'I065', cat:'C07', brand:'B009', name_zh:'Tiffany T Smile 银款', name_en:'Tiffany T Smile (Silver)', price:2500, r:'f', tags:['classic','sweet'] },
+  { id: 'I067', cat:'C07', brand:'B010', name_zh:'Sweet Alhambra 耳钉', name_en:'Sweet Alhambra Earrings', price:12000, r:'f', tags:['classic','treat'] },
+  { id: 'I068', cat:'C07', brand:'B008', name_zh:'Cartier Trinity 三色金耳钉', name_en:'Trinity Earrings', price:15000, r:'f', tags:['classic','treat'] },
+
+  // Necklace
+  { id: 'I069', cat:'C08', brand:'B009', name_zh:'Return to Tiffany 心形项链 银', name_en:'Return to Tiffany Heart Pendant', price:2800, r:'f', tags:['romantic','classic'] },
+  { id: 'I070', cat:'C08', brand:'B010', name_zh:'Vintage Alhambra 项链', name_en:'Vintage Alhambra Pendant', price:28000, r:'f', tags:['classic','treat'] },
+  { id: 'I071', cat:'C08', brand:'B008', name_zh:'Cartier Love 项链', name_en:'Love Necklace', price:18000, r:'f', tags:['romantic','classic'] },
+
+  // Ring/bracelet (group with jewellery)
+  { id: 'I072', cat:'C10', brand:'B008', name_zh:'Cartier Love 手镯 18K', name_en:'Love Bracelet 18K', price:42000, r:'f', tags:['romantic','treat'] },
+
+  // Watch
+  { id: 'I074', cat:'C11', brand:'B044', name_zh:'Casio 小方块 A158', name_en:'Casio A158 Vintage', price:180, r:'u', tags:['playful','daily'] },
+  { id: 'I077', cat:'C11', brand:'B067', name_zh:'Apple Watch SE', name_en:'Apple Watch SE', price:2199, r:'u', tags:['practical','daily'] },
+  { id: 'I079', cat:'C11', brand:'B067', name_zh:'Apple Watch Series 10', name_en:'Apple Watch Series 10', price:3499, r:'u', tags:['practical','daily'] },
+  { id: 'I080', cat:'C11', brand:'B011', name_zh:'Tudor Black Bay 58', name_en:'Tudor Black Bay 58', price:38000, r:'m', tags:['classic','treat'] },
+
+  // Scarf / clothing
+  { id: 'I081', cat:'C12', brand:'B061', name_zh:'Muji 羊毛混纺围巾', name_en:'Wool-Blend Scarf', price:199, r:'u', tags:['daily','practical'] },
+  { id: 'I082', cat:'C12', brand:'B028', name_zh:'Acne Studios Mini 围巾', name_en:'Acne Studios Mini Scarf', price:1200, r:'u', tags:['tasteful','playful'] },
+  { id: 'I083', cat:'C12', brand:'B016', name_zh:'Burberry 经典格纹围巾(小款)', name_en:'Classic Check Scarf (Mini)', price:3800, r:'u', tags:['classic','tasteful'] },
+  { id: 'I084', cat:'C12', brand:'B001', name_zh:'Hermès Carré 90 丝巾', name_en:'Carré 90 Silk Scarf', price:5300, r:'f', tags:['classic','treat'] },
+
+  // Sunglasses
+  { id: 'I086', cat:'C13', brand:'B058', name_zh:'Ray-Ban 经典款', name_en:'Ray-Ban Classics', price:900, r:'u', tags:['classic','daily'] },
+  { id: 'I087', cat:'C13', brand:'B058', name_zh:'Gentle Monster 入门款', name_en:'Gentle Monster (Entry)', price:1500, r:'u', tags:['bold','tasteful'] },
+
+  // Food/Tea/Wine
+  { id: 'I089', cat:'C15', brand:'B039', name_zh:'茶里 CHALI 节日礼盒', name_en:'CHALI Festival Tea Set', price:150, r:'u', tags:['practical','warm'] },
+  { id: 'I091', cat:'C15', brand:'B039', name_zh:'TWG Tea 礼盒装', name_en:'TWG Tea Gift Set', price:800, r:'u', tags:['tasteful','respectful'] },
+  { id: 'I095', cat:'C17', brand:'B039', name_zh:'奔富 Bin 8/28', name_en:'Penfolds Bin 8/28', price:600, r:'u', tags:['practical','daily'] },
+  { id: 'I096', cat:'C17', brand:'B039', name_zh:'奔富 Bin 389', name_en:'Penfolds Bin 389', price:1500, r:'u', tags:['classic','tasteful'] },
+  { id: 'I098', cat:'C17', brand:'B039', name_zh:'奔富 Grange', name_en:'Penfolds Grange', price:6500, r:'u', tags:['treat','tasteful'] },
+  { id: 'I135', cat:'C16', brand:'B039', name_zh:'Godiva 节日礼盒', name_en:'Godiva Festive Box', price:180, r:'u', tags:['sweet','daily'] },
+
+  // Pen / stationery
+  { id: 'I100', cat:'C18', brand:'B073', name_zh:'LAMY Safari 钢笔', name_en:'Safari Fountain Pen', price:250, r:'u', tags:['daily','practical'] },
+  { id: 'I103', cat:'C18', brand:'B073', name_zh:'LAMY 2000 钢笔', name_en:'LAMY 2000 Fountain Pen', price:900, r:'u', tags:['classic','tasteful'] },
+  { id: 'I106', cat:'C18', brand:'B072', name_zh:'万宝龙大班 146/149', name_en:'Montblanc Meisterstück 146/149', price:6500, r:'m', tags:['classic','treat'] },
+  { id: 'I107', cat:'C18', brand:'B040', name_zh:'Hobonichi 手帐套装', name_en:'Hobonichi Techo Set', price:600, r:'u', tags:['daily','tasteful'] },
+  { id: 'I108', cat:'C18', brand:'B041', name_zh:'Smythson Panama notebook', name_en:'Smythson Panama Notebook', price:2000, r:'u', tags:['classic','treat'] },
+
+  // Tech
+  { id: 'I110', cat:'C19', brand:'B067', name_zh:'AirPods 3', name_en:'AirPods (3rd gen)', price:999, r:'u', tags:['practical','daily'] },
+  { id: 'I111', cat:'C19', brand:'B067', name_zh:'AirPods Pro 2', name_en:'AirPods Pro 2', price:1799, r:'u', tags:['practical','treat'] },
+  { id: 'I112', cat:'C19', brand:'B067', name_zh:'Kindle Paperwhite', name_en:'Kindle Paperwhite', price:1500, r:'u', tags:['practical','daily'] },
+  { id: 'I113', cat:'C19', brand:'B068', name_zh:'Sony WF-1000XM5', name_en:'Sony WF-1000XM5', price:1999, r:'u', tags:['practical','treat'] },
+  { id: 'I114', cat:'C19', brand:'B067', name_zh:'AirPods Max', name_en:'AirPods Max', price:4399, r:'u', tags:['treat','tasteful'] },
+
+  // Cup / home
+  { id: 'I117', cat:'C20', brand:'B045', name_zh:'Owala FreeSip 24oz', name_en:'Owala FreeSip 24oz', price:200, r:'u', tags:['daily','playful'] },
+  { id: 'I118', cat:'C20', brand:'B044', name_zh:'Stanley Quencher 30oz', name_en:'Stanley Quencher 30oz', price:400, r:'u', tags:['daily','playful'] },
+  { id: 'I119', cat:'C20', brand:'B063', name_zh:'Iittala Kastehelmi 露珠杯', name_en:'Iittala Kastehelmi', price:400, r:'f', tags:['tasteful','daily'] },
+
+  // Plush / collectible
+  { id: 'I121', cat:'C21', brand:'B046', name_zh:'Jellycat Bashful Bunny 小号', name_en:'Bashful Bunny Small', price:199, r:'f', tags:['sweet','playful'] },
+  { id: 'I122', cat:'C21', brand:'B047', name_zh:'Skullpanda 盲盒', name_en:'Skullpanda Blind Box', price:69, r:'u', tags:['playful','sweet'] },
+  { id: 'I123', cat:'C21', brand:'B046', name_zh:'Jellycat Bashful Bunny 大号', name_en:'Bashful Bunny Large', price:500, r:'f', tags:['sweet','warm'] },
+  { id: 'I124', cat:'C21', brand:'B047', name_zh:'Labubu Macaron 系列', name_en:'Labubu Macaron Series', price:599, r:'u', tags:['playful','bold'] },
+  { id: 'I125', cat:'C21', brand:'B046', name_zh:'Jellycat Huge Bunny', name_en:'Jellycat Huge Bunny', price:1800, r:'f', tags:['treat','warm'] },
+
+  // Home decor / tableware
+  { id: 'I127', cat:'C23', brand:'B063', name_zh:'Iittala Birds by Toikka 摆件', name_en:'Birds by Toikka (Small)', price:1500, r:'u', tags:['tasteful','classic'] },
+  { id: 'I128', cat:'C23', brand:'B062', name_zh:'Marimekko Unikko 印花靠垫', name_en:'Marimekko Unikko Cushion', price:400, r:'u', tags:['playful','daily'] },
+  { id: 'I129', cat:'C24', brand:'B064', name_zh:'Le Creuset 铸铁锅 22cm', name_en:'Le Creuset Round 22cm', price:2500, r:'u', tags:['practical','classic'] },
+
+  // Gift sets
+  { id: 'I131', cat:'C25', brand:'B021', name_zh:'Aesop 护手霜+沐浴礼盒', name_en:'Aesop Hand+Body Set', price:650, r:'u', tags:['daily','respectful'] },
+  { id: 'I133', cat:'C25', brand:'B037', name_zh:'观夏 节日限定礼盒', name_en:'To Summer Festive Set', price:800, r:'f', tags:['tasteful','warm'] },
+  { id: 'I134', cat:'C25', brand:'B001', name_zh:'Hermès 香水+蜡烛 节日礼盒', name_en:'Hermès Fragrance+Candle Set', price:4500, r:'f', tags:['treat','classic'] },
+];
+
+// product description templates (literary tone)
+const DESC = {
+  fragrance: { zh:'一支克制而有记忆点的香水，留香恰当。日常使用，不喧宾夺主。', en:'A restrained, memorable scent. Easy on the wrist, never loud.' },
+  skincare:  { zh:'一份"安全的体面"——成分稳妥，包装无差错，几乎不会被退回。', en:'A safe form of considered. Strong formula, polished packaging.' },
+  jewellery: { zh:'一件可以替你说出"我在意你"的小物，戴久了像是一段故事的开头。', en:'A small piece that says "you mattered to me". Worth wearing into a memory.' },
+  bag:       { zh:'一只挑得很有判断的包——不张扬，但凡是懂行的人一眼就识。', en:'A bag chosen with judgement. Quiet to a stranger, instantly read by an insider.' },
+  watch:     { zh:'时间是最古老的礼物之一。这只挑给了一个有信物意识的人。', en:'Time is among the oldest of gifts. This one is for someone who keeps tokens.' },
+  clothing:  { zh:'一件愿意陪 TA 过完整个冬天的物件，材质和颜色都不会出错。', en:"A piece that can see them through a whole winter. Reliable in material and tone." },
+  home:      { zh:'放在 TA 家的桌上、架上，每天看到一次，就是一次柔软的提醒。', en:"For their table or shelf. Seen daily, it is a soft reminder of you." },
+  food:      { zh:'季节性的体面礼——分享场合好用，也避开了体型与尺码这些雷。', en:"A seasonal, shareable choice. Sidesteps the minefield of size and fit." },
+  tech:      { zh:'实用是 TA 的偏好。挑这件，是想让 TA 觉得"你懂"。', en:"Practical is their love language. This says you understand them." },
+};
+
+// reason tags by category
+const REASON_TAGS = {
+  fragrance: { zh:['日常可用','留香克制','配搭友好'], en:['Daily wear','Restrained sillage','Pairs easily'] },
+  skincare:  { zh:['成分稳妥','送礼安全','大牌质感'], en:['Trusted formula','Safe choice','Heritage'] },
+  jewellery: { zh:['有信物感','可日佩','值得长存'], en:['Token-like','Wearable daily','Built to last'] },
+  bag:       { zh:['不喧哗','配色克制','认知度高'], en:['Quiet luxury','Restrained palette','Insider recognised'] },
+  watch:     { zh:['工艺感','耐看','有重量'], en:['Crafted','Timeless','With weight'] },
+  clothing:  { zh:['过冬必备','材质讲究','百搭'], en:['Winter ready','Material-led','Versatile'] },
+  home:      { zh:['日常可见','装饰友好','长效喜欢'], en:['Daily visible','Decor friendly','Lasting joy'] },
+  food:      { zh:['节日适配','可分享','轻负担'], en:['Festival fit','Shareable','Low-stakes'] },
+  tech:      { zh:['真用得上','省心','安全选项'], en:['Genuinely useful','Worry-free','Safe pick'] },
+};
+
+// platform per region
+const PLATFORM = { sg: 'Lazada', cn: '天猫', na: 'Amazon' };
+const REGION_DEFAULT = 'sg';
+
+// tips
+const TIPS = [
+  { zh:'送礼嘛，最重要是自己开心。', en:'Gifting, above all, should bring you joy first.' },
+  { zh:'多贵多少都是心意，只要足够特别就能让 TA 记住。', en:'Whatever it costs, what they remember is something distinctly chosen.' },
+  { zh:'不必苛求完美，礼物的重量在于你认真想过了。', en:"Don't aim for perfect. What matters is that you considered them carefully." },
+  { zh:'最好的礼物是让对方意外的那一个。', en:'The best gifts are the ones they did not expect.' },
+  { zh:'同样的东西换个时机，意义截然不同。', en:'The same item, given at the right moment, becomes everything.' },
+  { zh:'与其追新潮，不如选 TA 真正会用的。', en:'Better than chasing trends is choosing what they will actually use.' },
+  { zh:'一份小礼也能成为故事，重要的是讲法。', en:'Even a small gift becomes a story, told well.' },
+  { zh:'别忘了写一张卡片——比包装更值钱。', en:'Write a card. It matters more than the wrapping.' },
+  { zh:'真正贵的不是钱，是你愿意花的那点时间。', en:'What is truly costly is not the price. It is the time you took to choose.' },
+];
+
+// ============== STATE ==============
+const STATE = {
+  lang: 'zh',
+  region: REGION_DEFAULT,
+  step: 0, // 0=welcome, 1..8=steps, 9=result
+  intent: [], recipient: null, closeness: 3, occasion: null,
+  budgetT: 0.30, // slider t value
+  persona: [], givenBefore: [],
+  brands: {}, // brand_id → 'own'|'want'|'skip'
+  brandBatch: 0,
+  tipIndex: 0,
+  resultCard: 0,
+  results: null,
+};
+
+// initial shuffle order for brand batches (stable)
+const BRAND_ORDER = (() => {
+  const a = BRANDS.slice();
+  // light shuffle deterministic by index
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = (i * 7 + 3) % (i + 1);
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+})();
+const BATCH_SIZE = 8;
+const TOTAL_BATCHES = Math.ceil(BRAND_ORDER.length / BATCH_SIZE);
+
+// ============== UTILITIES ==============
+const $ = s => document.querySelector(s);
+const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+const t = key => (T[key]?.[STATE.lang]) ?? key;
+
+function priceSGD(rmb) { return Math.round(rmb / 5.3); }
+function priceCNY(rmb) { return rmb; }
+function priceUSD(rmb) { return Math.round(rmb / 7.2); }
+
+function localizedPrice(rmb) {
+  if (STATE.region === 'sg') return 'S$' + priceSGD(rmb).toLocaleString();
+  if (STATE.region === 'cn') return '¥' + priceCNY(rmb).toLocaleString();
+  return '$' + priceUSD(rmb).toLocaleString();
+}
+
+// non-linear budget (S$50 → S$10000)
+function budgetFromT(t) {
+  const min = Math.log(50), max = Math.log(10000);
+  return Math.round(Math.exp(min + t * (max - min)) / 10) * 10;
+}
+function budgetLabel(sgd) {
+  if (STATE.lang === 'zh') {
+    if (sgd < 100) return '一点小心意';
+    if (sgd < 300) return '朋友间的体面';
+    if (sgd < 1000) return '认真挑过的礼物';
+    if (sgd < 3000) return '重要场合的诚意';
+    return '仪式级别';
+  } else {
+    if (sgd < 100) return 'A small thought';
+    if (sgd < 300) return 'Considered, for a friend';
+    if (sgd < 1000) return 'A meaningful choice';
+    if (sgd < 3000) return 'Sincerity, for the moment';
+    return 'A statement of devotion';
+  }
+}
+
+// ============== RECOMMENDATION ENGINE ==============
+function recommend() {
+  const budgetSGD = budgetFromT(STATE.budgetT);
+  const budgetRMB = budgetSGD * 5.3;
+  const excludedCats = new Set(STATE.givenBefore);
+  const skippedBrands = new Set(Object.entries(STATE.brands).filter(([_,v])=>v==='skip').map(([k])=>k));
+  const wantedBrands = new Set(Object.entries(STATE.brands).filter(([_,v])=>v==='want').map(([k])=>k));
+  const ownedBrands = new Set(Object.entries(STATE.brands).filter(([_,v])=>v==='own').map(([k])=>k));
+
+  // PRD: ±15% budget, then relax to ±50% if needed
+  function fits(price, tol) {
+    return price >= budgetRMB * (1 - tol) && price <= budgetRMB * (1 + tol);
+  }
+
+  function scoreItem(item, tol) {
+    if (!fits(item.price, tol)) return -1;
+    if (skippedBrands.has(item.brand)) return -1;
+    if (excludedCats.has(catFamilyFor(item))) return -1;
+    let s = 50;
+    if (wantedBrands.has(item.brand)) s += 40;
+    if (ownedBrands.has(item.brand)) s -= 30; // avoid direct repeat
+    // intent match
+    const intentSet = new Set(STATE.intent);
+    const intentMatch = (item.tags || []).filter(tg => intentSet.has(tg)).length;
+    s += intentMatch * 14;
+    // budget proximity: closer to budget = better; main pick at or below
+    const ratio = item.price / budgetRMB;
+    if (ratio <= 1) s += 8;
+    s -= Math.abs(1 - ratio) * 10;
+    // closeness adjustment: low closeness deprioritises intimate cats
+    const intimateCats = new Set(['skincare', 'fragrance', 'jewellery']);
+    if (STATE.closeness <= 2 && intimateCats.has(CAT_MAP[item.cat])) s -= 18;
+    if (STATE.closeness >= 5 && intimateCats.has(CAT_MAP[item.cat])) s += 8;
+    // social occasions favor safe categories
+    return s;
+  }
+
+  function pickByCategoryDiverse(tol) {
+    const candidates = ITEMS
+      .map(it => ({ ...it, score: scoreItem(it, tol) }))
+      .filter(it => it.score > 0)
+      .sort((a,b) => b.score - a.score);
+    const picks = [];
+    const usedCats = new Set();
+    for (const c of candidates) {
+      const cat = CAT_MAP[c.cat];
+      if (!usedCats.has(cat)) {
+        picks.push(c);
+        usedCats.add(cat);
+        if (picks.length === 3) break;
+      }
+    }
+    return picks;
+  }
+
+  function catFamilyFor(item) {
+    const c = CAT_MAP[item.cat];
+    // map result-categories to given-before excludes
+    if (c === 'fragrance') return 'fragrance';
+    if (c === 'home' && (item.cat === 'C02')) return 'candle';
+    if (c === 'bag') return 'bag';
+    if (c === 'jewellery') return 'jewellery';
+    if (c === 'watch') return 'watch';
+    if (c === 'skincare') return 'skincare';
+    if (item.cat === 'C17') return 'wine';
+    if (item.cat === 'C15') return 'tea';
+    if (c === 'tech') return 'tech';
+    if (item.cat === 'C18') return 'pen';
+    return null;
+  }
+
+  let picks = pickByCategoryDiverse(0.5);
+  if (picks.length < 3) picks = pickByCategoryDiverse(0.9);
+  if (picks.length < 3) picks = pickByCategoryDiverse(2.0);
+
+  // Final fallback: just pick top 3 with category diversity loose
+  if (picks.length < 3) {
+    const fallback = ITEMS.slice().sort((a,b) => Math.abs(a.price - budgetRMB) - Math.abs(b.price - budgetRMB));
+    picks = fallback.slice(0, 3);
+  }
+
+  const scores = [98, 91, 87];
+  return picks.slice(0, 3).map((p, i) => ({ ...p, displayScore: scores[i] || 80 }));
+}
+
+// ============== TARGETED UPDATES (no full re-render) ==============
+function setNextState(enabled, label) {
+  const btn = document.querySelector('.btn-next');
+  if (!btn) return;
+  btn.disabled = !enabled;
+  if (label != null) btn.innerHTML = label + ' <span class="arrow">→</span>';
+}
+function clearGroupSelection(scope) {
+  scope.querySelectorAll('.tag.selected').forEach(t => t.classList.remove('selected'));
+}
+function toggleTagClass(btn, on) {
+  btn.classList.toggle('selected', on);
+}
+function setBrand(bid, state) {
+  if (state == null || STATE.brands[bid] === state) delete STATE.brands[bid];
+  else STATE.brands[bid] = state;
+  const card = document.querySelector(`[data-bid="${bid}"]`);
+  if (card) {
+    card.className = 'brand-card' + (STATE.brands[bid] ? ' state-' + STATE.brands[bid] : '');
+    card.querySelectorAll('.brand-action').forEach(btn => {
+      btn.classList.toggle('active', STATE.brands[bid] === btn.dataset.state);
+    });
+  }
+  redrawAccumulator();
+}
+function redrawAccumulator() {
+  const wrap = document.querySelector('.brand-step');
+  if (!wrap) return;
+  const existing = wrap.querySelector('.accumulator');
+  if (existing) existing.remove();
+  const entries = Object.entries(STATE.brands);
+  if (entries.length === 0) return;
+  const accum = el('div', 'accumulator');
+  const lbl = el('div', 'accumulator-label');
+  lbl.innerHTML = `<span>${t('accumLabel')}</span><span class="count">${entries.length}</span>`;
+  accum.appendChild(lbl);
+  const chips = el('div', 'chips');
+  const order = { own: 0, want: 1, skip: 2 };
+  entries.sort((a, b) => order[a[1]] - order[b[1]]);
+  entries.forEach(([bid, st]) => {
+    const br = BRAND_BY_ID[bid];
+    if (!br) return;
+    const chip = el('span', 'chip ' + st);
+    chip.innerHTML = `${br.name || br.name_zh}<span class="x">×</span>`;
+    chip.querySelector('.x').onclick = (e) => { e.stopPropagation(); setBrand(bid, null); };
+    chips.appendChild(chip);
+  });
+  accum.appendChild(chips);
+  wrap.appendChild(accum);
+}
+
+// ============== RENDERING ==============
+let _ABORT = null;
+function onWindow(type, handler, opts) {
+  window.addEventListener(type, handler, { signal: _ABORT.signal, ...(opts || {}) });
+}
+function render() {
+  if (_ABORT) _ABORT.abort();
+  _ABORT = new AbortController();
+  const app = $('#app');
+  app.innerHTML = '';
+  if (STATE.step === 0) renderWelcome(app);
+  else if (STATE.step >= 1 && STATE.step <= 8) renderStep(app);
+  else if (STATE.step === 9) renderResult(app);
+}
+
+function topbar(showClose = true) {
+  const bar = el('div', 'topbar');
+  const brand = el('div', 'brand-mark');
+  brand.innerHTML = `<span class="ch">礼</span><span class="en">A Gift</span>`;
+  bar.appendChild(brand);
+
+  const actions = el('div', 'actions');
+  const langWrap = el('div', 'lang-toggle');
+  langWrap.innerHTML = `<span class="opt ${STATE.lang==='zh'?'active':''}" data-lang="zh">中</span><span class="sep">/</span><span class="opt ${STATE.lang==='en'?'active':''}" data-lang="en">EN</span>`;
+  langWrap.querySelectorAll('.opt').forEach(o => {
+    o.onclick = () => { STATE.lang = o.dataset.lang; render(); };
+  });
+  actions.appendChild(langWrap);
+
+  if (showClose && STATE.step !== 0) {
+    const close = el('button', 'btn-close', '×');
+    close.onclick = () => { Object.assign(STATE, freshStateKeepLang()); render(); };
+    actions.appendChild(close);
+  }
+  bar.appendChild(actions);
+  return bar;
+}
+
+function freshStateKeepLang() {
+  return {
+    step: 0, intent: [], recipient: null, closeness: 3, occasion: null,
+    budgetT: 0.30, persona: [], givenBefore: [], brands: {}, brandBatch: 0,
+    resultCard: 0, results: null, tipIndex: 0,
+  };
+}
+
+function progressDots(active) {
+  const wrap = el('div', 'progress');
+  for (let i = 1; i <= 8; i++) {
+    const d = el('div', 'dot' + (i === active ? ' active' : i < active ? ' past' : ''));
+    wrap.appendChild(d);
+  }
+  return wrap;
+}
+
+function bottomBar(opts) {
+  // opts: { showBack=true, nextLabel=t('next'), nextEnabled=true, onNext, onBack, secondaryLabel, onSecondary }
+  const bar = el('div', 'bottombar');
+  if (opts.showBack !== false) {
+    const back = el('button', 'btn-back');
+    back.innerHTML = `<span class="arrow">←</span>${t('back')}`;
+    back.onclick = opts.onBack || (() => { STATE.step--; render(); });
+    bar.appendChild(back);
+  } else { bar.appendChild(el('div')); }
+  if (opts.secondaryLabel) {
+    const sec = el('button', 'btn-back');
+    sec.textContent = opts.secondaryLabel;
+    sec.onclick = opts.onSecondary;
+    bar.appendChild(sec);
+  }
+  const next = el('button', 'btn-next');
+  next.innerHTML = (opts.nextLabel || t('next')) + ' <span class="arrow">→</span>';
+  next.disabled = opts.nextEnabled === false;
+  next.onclick = opts.onNext;
+  bar.appendChild(next);
+  return bar;
+}
+
+function stepHead(num, total, titleKey, subKey, hintKey) {
+  const wrap = el('div', 'step-head');
+  const meta = el('div', 'step-meta');
+  meta.innerHTML = `<span class="num">${STATE.lang==='zh'? t('step') + ' ' + String(num).padStart(2, '0') : 'STEP ' + String(num).padStart(2, '0')}</span><span class="of">${t('ofTotal')}</span>`;
+  wrap.appendChild(meta);
+  const title = el('div', 'step-title' + (STATE.lang === 'en' ? ' lang-en' : ''));
+  title.textContent = t(titleKey);
+  wrap.appendChild(title);
+  const sub = el('div', 'step-sub' + (STATE.lang === 'en' ? ' lang-en' : ''));
+  sub.textContent = t(subKey);
+  wrap.appendChild(sub);
+  const hint = el('div', 'step-hint');
+  hint.textContent = t(hintKey);
+  wrap.appendChild(hint);
+  return wrap;
+}
+
+// ============== WELCOME ==============
+function renderWelcome(app) {
+  app.appendChild(topbar(false));
+  const screen = el('div', 'screen welcome-screen');
+  const w = el('div', 'welcome fade-up');
+  w.innerHTML = `
+    <div class="welcome-mark">
+      <div class="welcome-char">礼</div>
+      <div class="welcome-name">A Gift</div>
+    </div>
+    <div class="welcome-tagline">${T.welcomeTagline[STATE.lang]}${STATE.lang === 'zh' ? `<span class="en">${T.welcomeTagline.en}</span>` : ''}</div>
+    <button class="welcome-cta">${t('begin')}</button>
+  `;
+  w.querySelector('.welcome-cta').onclick = () => { STATE.step = 1; render(); };
+  screen.appendChild(w);
+  app.appendChild(screen);
+  const foot = el('div', 'welcome-foot', 'v1.0 · MVP Prototype');
+  app.appendChild(foot);
+}
+
+// ============== STEP 1: INTENT ==============
+function renderStep(app) {
+  app.appendChild(topbar());
+  app.appendChild(progressDots(STATE.step));
+  const screen = el('div', 'screen');
+  app.appendChild(screen);
+
+  if (STATE.step === 1) renderS1(screen);
+  else if (STATE.step === 2) renderS2(screen);
+  else if (STATE.step === 3) renderS3(screen);
+  else if (STATE.step === 4) renderS4(screen);
+  else if (STATE.step === 5) renderS5(screen);
+  else if (STATE.step === 6) renderS6(screen);
+  else if (STATE.step === 7) renderS7(screen);
+  else if (STATE.step === 8) renderS8(screen);
+}
+
+function renderS1(screen) {
+  screen.appendChild(stepHead(1, 8, 's1Title', 's1Sub', 's1Hint'));
+  const groups = el('div', 'tag-groups fade-up');
+  Object.entries(INTENTS).forEach(([gid, tags]) => {
+    const g = el('div', 'tag-group');
+    g.innerHTML = `<div class="group-label">${T.intents[gid][STATE.lang]}</div>`;
+    const row = el('div', 'tag-row');
+    tags.forEach(tag => {
+      const b = el('button', 'tag' + (STATE.intent.includes(tag.id) ? ' selected' : ''), tag[STATE.lang]);
+      b.onclick = () => {
+        const i = STATE.intent.indexOf(tag.id);
+        if (i >= 0) { STATE.intent.splice(i, 1); toggleTagClass(b, false); }
+        else if (STATE.intent.length < 2) { STATE.intent.push(tag.id); toggleTagClass(b, true); }
+        setNextState(STATE.intent.length >= 1);
+      };
+      row.appendChild(b);
+    });
+    g.appendChild(row);
+    groups.appendChild(g);
+  });
+  screen.appendChild(groups);
+  document.getElementById('app').appendChild(bottomBar({
+    showBack: false,
+    nextEnabled: STATE.intent.length >= 1,
+    onNext: () => { STATE.step = 2; render(); },
+  }));
+}
+
+function renderS2(screen) {
+  screen.appendChild(stepHead(2, 8, 's2Title', 's2Sub', 's2Hint'));
+  const groups = el('div', 'tag-groups fade-up');
+  Object.entries(RECIPIENTS).forEach(([gid, tags]) => {
+    const g = el('div', 'tag-group');
+    g.innerHTML = `<div class="group-label">${T.recipients[gid][STATE.lang]}</div>`;
+    const row = el('div', 'tag-row');
+    tags.forEach(tag => {
+      const b = el('button', 'tag' + (STATE.recipient === tag.id ? ' selected' : ''), tag[STATE.lang]);
+      b.onclick = () => {
+        STATE.recipient = tag.id;
+        clearGroupSelection(groups);
+        toggleTagClass(b, true);
+        setNextState(true);
+      };
+      row.appendChild(b);
+    });
+    g.appendChild(row);
+    groups.appendChild(g);
+  });
+  screen.appendChild(groups);
+  document.getElementById('app').appendChild(bottomBar({
+    nextEnabled: !!STATE.recipient,
+    onNext: () => { STATE.step = 3; render(); },
+  }));
+}
+
+function renderS3(screen) {
+  screen.appendChild(stepHead(3, 8, 's3Title', 's3Sub', 's3Hint'));
+  const wrap = el('div', 'slider-wrap fade-up');
+  const labels = T.closenessLabels[STATE.lang];
+  const value = el('div', 'slider-value');
+  const updateValue = () => {
+    value.innerHTML = `<div class="num">${String(STATE.closeness + 1).padStart(2, '0')}</div><div class="sublabel">${labels[STATE.closeness]}</div>`;
+  };
+  updateValue();
+  wrap.appendChild(value);
+
+  const track = el('div', 'slider-track');
+  const line = el('div', 'slider-line');
+  const fill = el('div', 'slider-fill');
+  const thumb = el('div', 'slider-thumb');
+  track.appendChild(line); track.appendChild(fill); track.appendChild(thumb);
+
+  const ticks = el('div', 'slider-ticks');
+  for (let i = 0; i < 7; i++) ticks.appendChild(el('div', 'slider-tick' + (i % 3 === 0 ? ' major' : '')));
+
+  const labRow = el('div', 'slider-labels');
+  labels.forEach((l, i) => {
+    const s = el('span', i === STATE.closeness ? 'active' : '', l);
+    labRow.appendChild(s);
+  });
+
+  function setPos() {
+    const pct = STATE.closeness / 6;
+    thumb.style.left = (pct * 100) + '%';
+    fill.style.width = (pct * 100) + '%';
+  }
+  setPos();
+
+  function handlePos(x) {
+    const rect = track.getBoundingClientRect();
+    const t = Math.max(0, Math.min(1, (x - rect.left) / rect.width));
+    const idx = Math.round(t * 6);
+    if (idx !== STATE.closeness) {
+      STATE.closeness = idx;
+      setPos(); updateValue();
+      labRow.querySelectorAll('span').forEach((s, i) => s.classList.toggle('active', i === idx));
+    }
+  }
+  let dragging = false;
+  const onDown = (e) => { dragging = true; thumb.classList.add('grab'); const x = e.touches? e.touches[0].clientX : e.clientX; handlePos(x); e.preventDefault(); };
+  const onMove = (e) => { if (!dragging) return; const x = e.touches? e.touches[0].clientX : e.clientX; handlePos(x); };
+  const onUp = () => { dragging = false; thumb.classList.remove('grab'); };
+  track.addEventListener('mousedown', onDown);
+  track.addEventListener('touchstart', onDown, { passive: false });
+  onWindow('mousemove', onMove);
+  onWindow('touchmove', onMove, { passive: false });
+  onWindow('mouseup', onUp);
+  onWindow('touchend', onUp);
+
+  wrap.appendChild(track);
+  wrap.appendChild(ticks);
+  wrap.appendChild(labRow);
+  screen.appendChild(wrap);
+  document.getElementById('app').appendChild(bottomBar({
+    onNext: () => { STATE.step = 4; render(); },
+  }));
+}
+
+function renderS4(screen) {
+  screen.appendChild(stepHead(4, 8, 's4Title', 's4Sub', 's4Hint'));
+  const groups = el('div', 'tag-groups fade-up');
+  Object.entries(OCCASIONS).forEach(([gid, tags]) => {
+    const g = el('div', 'tag-group');
+    g.innerHTML = `<div class="group-label">${T.occasions[gid][STATE.lang]}</div>`;
+    const row = el('div', 'tag-row');
+    tags.forEach(tag => {
+      const b = el('button', 'tag' + (STATE.occasion === tag.id ? ' selected' : ''), tag[STATE.lang]);
+      b.onclick = () => {
+        STATE.occasion = tag.id;
+        clearGroupSelection(groups);
+        toggleTagClass(b, true);
+        setNextState(true);
+      };
+      row.appendChild(b);
+    });
+    g.appendChild(row);
+    groups.appendChild(g);
+  });
+  screen.appendChild(groups);
+  document.getElementById('app').appendChild(bottomBar({
+    nextEnabled: !!STATE.occasion,
+    onNext: () => { STATE.step = 5; render(); },
+  }));
+}
+
+function renderS5(screen) {
+  screen.appendChild(stepHead(5, 8, 's5Title', 's5Sub', 's5Hint'));
+  const wrap = el('div', 'slider-wrap fade-up');
+  const value = el('div', 'slider-value');
+  const updateValue = () => {
+    const sgd = budgetFromT(STATE.budgetT);
+    let s = 'S$' + sgd.toLocaleString();
+    if (sgd >= 9500) s = 'S$10,000+';
+    value.innerHTML = `<div class="num">${s}</div><div class="sublabel">${budgetLabel(sgd)}</div>`;
+  };
+  updateValue();
+  wrap.appendChild(value);
+
+  const track = el('div', 'slider-track');
+  const line = el('div', 'slider-line');
+  const fill = el('div', 'slider-fill');
+  const thumb = el('div', 'slider-thumb');
+  track.appendChild(line); track.appendChild(fill); track.appendChild(thumb);
+
+  const ticks = el('div', 'slider-ticks');
+  for (let i = 0; i < 11; i++) ticks.appendChild(el('div', 'slider-tick' + (i % 2 === 0 ? ' major' : '')));
+
+  const legend = el('div', 'slider-legend');
+  legend.innerHTML = `<span>S$ 50</span><span>S$ 800</span><span>S$ 10k+</span>`;
+
+  function setPos() {
+    thumb.style.left = (STATE.budgetT * 100) + '%';
+    fill.style.width = (STATE.budgetT * 100) + '%';
+  }
+  setPos();
+
+  function handlePos(x) {
+    const rect = track.getBoundingClientRect();
+    const t = Math.max(0, Math.min(1, (x - rect.left) / rect.width));
+    STATE.budgetT = t;
+    setPos(); updateValue();
+  }
+  let dragging = false;
+  const onDown = (e) => { dragging = true; thumb.classList.add('grab'); const x = e.touches? e.touches[0].clientX : e.clientX; handlePos(x); e.preventDefault(); };
+  const onMove = (e) => { if (!dragging) return; const x = e.touches? e.touches[0].clientX : e.clientX; handlePos(x); };
+  const onUp = () => { dragging = false; thumb.classList.remove('grab'); };
+  track.addEventListener('mousedown', onDown);
+  track.addEventListener('touchstart', onDown, { passive: false });
+  onWindow('mousemove', onMove);
+  onWindow('touchmove', onMove, { passive: false });
+  onWindow('mouseup', onUp);
+  onWindow('touchend', onUp);
+
+  wrap.appendChild(track);
+  wrap.appendChild(ticks);
+  wrap.appendChild(legend);
+  screen.appendChild(wrap);
+  document.getElementById('app').appendChild(bottomBar({
+    onNext: () => { STATE.step = 6; render(); },
+  }));
+}
+
+function renderS6(screen) {
+  screen.appendChild(stepHead(6, 8, 's6Title', 's6Sub', 's6Hint'));
+  const groups = el('div', 'tag-groups fade-up');
+  const updateBtn = () => {
+    const need = 3 - STATE.persona.length;
+    const lbl = need > 0
+      ? (STATE.lang === 'zh' ? `还需 ${need} 项` : `${need} more`)
+      : t('next');
+    setNextState(STATE.persona.length >= 3, lbl);
+  };
+  Object.entries(PERSONAS).forEach(([gid, tags]) => {
+    const g = el('div', 'tag-group');
+    g.innerHTML = `<div class="group-label">${T.personas[gid][STATE.lang]}</div>`;
+    const row = el('div', 'tag-row');
+    tags.forEach(tag => {
+      const b = el('button', 'tag' + (STATE.persona.includes(tag.id) ? ' selected' : ''), tag[STATE.lang]);
+      b.onclick = () => {
+        const i = STATE.persona.indexOf(tag.id);
+        if (i >= 0) { STATE.persona.splice(i, 1); toggleTagClass(b, false); }
+        else { STATE.persona.push(tag.id); toggleTagClass(b, true); }
+        updateBtn();
+      };
+      row.appendChild(b);
+    });
+    g.appendChild(row);
+    groups.appendChild(g);
+  });
+  screen.appendChild(groups);
+  document.getElementById('app').appendChild(bottomBar({
+    nextEnabled: STATE.persona.length >= 3,
+    nextLabel: STATE.persona.length < 3 ? (STATE.lang === 'zh' ? `还需 ${3 - STATE.persona.length} 项` : `${3 - STATE.persona.length} more`) : t('next'),
+    onNext: () => { STATE.step = 7; render(); },
+  }));
+}
+
+function renderS7(screen) {
+  screen.appendChild(stepHead(7, 8, 's7Title', 's7Sub', 's7Hint'));
+  const groups = el('div', 'tag-groups fade-up');
+  const g = el('div', 'tag-group');
+  const row = el('div', 'tag-row');
+  GIVEN_BEFORE.forEach(tag => {
+    const b = el('button', 'tag' + (STATE.givenBefore.includes(tag.id) ? ' selected' : ''), tag[STATE.lang]);
+    b.onclick = () => {
+      const i = STATE.givenBefore.indexOf(tag.id);
+      if (i >= 0) { STATE.givenBefore.splice(i, 1); toggleTagClass(b, false); }
+      else { STATE.givenBefore.push(tag.id); toggleTagClass(b, true); }
+    };
+    row.appendChild(b);
+  });
+  g.appendChild(row);
+  groups.appendChild(g);
+  screen.appendChild(groups);
+  document.getElementById('app').appendChild(bottomBar({
+    secondaryLabel: t('skip'),
+    onSecondary: () => { STATE.step = 8; render(); },
+    onNext: () => { STATE.step = 8; render(); },
+  }));
+}
+
+function renderS8(screen) {
+  screen.appendChild(stepHead(8, 8, 's8Title', 's8Sub', 's8Hint'));
+  const wrap = el('div', 'brand-step fade-up');
+  const grid = el('div', 'brand-grid');
+  const start = STATE.brandBatch * BATCH_SIZE;
+  const batch = BRAND_ORDER.slice(start, start + BATCH_SIZE);
+  batch.forEach(br => {
+    const card = el('div', 'brand-card' + (STATE.brands[br.id] ? ' state-' + STATE.brands[br.id] : ''));
+    card.setAttribute('data-bid', br.id);
+    const displayName = br.name || br.name_zh;
+    card.innerHTML = `
+      <div class="brand-tier">${br.tier}</div>
+      <div class="brand-name">${displayName}</div>
+      <div class="brand-actions">
+        <button class="brand-action own ${STATE.brands[br.id]==='own'?'active':''}" data-state="own">${t('ownLabel')}</button>
+        <button class="brand-action want ${STATE.brands[br.id]==='want'?'active':''}" data-state="want">${t('wantLabel')}</button>
+        <button class="brand-action skip ${STATE.brands[br.id]==='skip'?'active':''}" data-state="skip">${t('skipLabel')}</button>
+      </div>
+    `;
+    card.querySelectorAll('.brand-action').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        setBrand(br.id, btn.dataset.state);
+      };
+    });
+    grid.appendChild(card);
+  });
+  wrap.appendChild(grid);
+
+  const swapRow = el('div', 'swap-row');
+  const swap = el('button', 'swap-btn', '↻  ' + t('swapBatch'));
+  swap.onclick = () => {
+    STATE.brandBatch = (STATE.brandBatch + 1) % TOTAL_BATCHES;
+    // redraw only the grid + counter, keep accumulator
+    const newGrid = el('div', 'brand-grid');
+    const newStart = STATE.brandBatch * BATCH_SIZE;
+    const newBatch = BRAND_ORDER.slice(newStart, newStart + BATCH_SIZE);
+    newBatch.forEach(br => {
+      const card = el('div', 'brand-card' + (STATE.brands[br.id] ? ' state-' + STATE.brands[br.id] : ''));
+      card.setAttribute('data-bid', br.id);
+      const displayName = br.name || br.name_zh;
+      card.innerHTML = `
+        <div class="brand-tier">${br.tier}</div>
+        <div class="brand-name">${displayName}</div>
+        <div class="brand-actions">
+          <button class="brand-action own ${STATE.brands[br.id]==='own'?'active':''}" data-state="own">${t('ownLabel')}</button>
+          <button class="brand-action want ${STATE.brands[br.id]==='want'?'active':''}" data-state="want">${t('wantLabel')}</button>
+          <button class="brand-action skip ${STATE.brands[br.id]==='skip'?'active':''}" data-state="skip">${t('skipLabel')}</button>
+        </div>
+      `;
+      card.querySelectorAll('.brand-action').forEach(btn => {
+        btn.onclick = (e) => { e.stopPropagation(); setBrand(br.id, btn.dataset.state); };
+      });
+      newGrid.appendChild(card);
+    });
+    wrap.querySelector('.brand-grid').replaceWith(newGrid);
+    wrap.querySelector('.batch-counter').textContent = `${STATE.brandBatch + 1} / ${TOTAL_BATCHES}`;
+  };
+  const counter = el('div', 'batch-counter', `${STATE.brandBatch + 1} / ${TOTAL_BATCHES}`);
+  swapRow.appendChild(swap);
+  swapRow.appendChild(counter);
+  wrap.appendChild(swapRow);
+
+  screen.appendChild(wrap);
+  redrawAccumulator();
+
+  document.getElementById('app').appendChild(bottomBar({
+    nextLabel: STATE.lang === 'zh' ? '看推荐' : 'SEE RESULTS',
+    onNext: () => {
+      STATE.results = recommend();
+      STATE.tipIndex = Math.floor(Math.random() * TIPS.length);
+      STATE.resultCard = 0;
+      STATE.step = 9;
+      render();
+    },
+  }));
+}
+
+// ============== RESULT ==============
+const CAT_SVG = {
+  fragrance: '<svg viewBox="0 0 60 60"><rect x="22" y="4" width="16" height="10" stroke-width="1"/><path d="M18 14 L42 14 L42 56 L18 56 Z" stroke-width="1"/><line x1="22" y1="24" x2="38" y2="24" stroke-width="1"/></svg>',
+  skincare:  '<svg viewBox="0 0 60 60"><rect x="22" y="6" width="16" height="6" stroke-width="1"/><rect x="18" y="12" width="24" height="44" stroke-width="1"/></svg>',
+  jewellery: '<svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="14" stroke-width="1"/><circle cx="30" cy="30" r="7" stroke-width="1"/></svg>',
+  bag:       '<svg viewBox="0 0 60 60"><path d="M10 22 L50 22 L46 54 L14 54 Z" stroke-width="1"/><path d="M20 22 C 20 12, 40 12, 40 22" stroke-width="1"/></svg>',
+  watch:     '<svg viewBox="0 0 60 60"><rect x="20" y="20" width="20" height="20" stroke-width="1"/><line x1="30" y1="20" x2="30" y2="4" stroke-width="1"/><line x1="30" y1="40" x2="30" y2="56" stroke-width="1"/></svg>',
+  clothing:  '<svg viewBox="0 0 60 60"><path d="M10 16 L20 8 L40 8 L50 16 L44 22 L40 18 L40 52 L20 52 L20 18 L16 22 Z" stroke-width="1"/></svg>',
+  home:      '<svg viewBox="0 0 60 60"><path d="M30 8 L52 28 L46 28 L46 52 L14 52 L14 28 L8 28 Z" stroke-width="1"/></svg>',
+  food:      '<svg viewBox="0 0 60 60"><path d="M22 10 L38 10 L36 52 L24 52 Z" stroke-width="1"/><line x1="24" y1="22" x2="36" y2="22" stroke-width="1"/></svg>',
+  tech:      '<svg viewBox="0 0 60 60"><rect x="10" y="14" width="40" height="26" stroke-width="1"/><line x1="22" y1="46" x2="38" y2="46" stroke-width="1"/></svg>',
+};
+
+function renderResult(app) {
+  app.appendChild(topbar());
+  const screen = el('div', 'screen result-screen');
+  const deck = el('div', 'result-deck');
+
+  const cards = STATE.results.map((r, i) => buildResultCard(r, i)).concat([buildRefineCard()]);
+  cards.forEach((c, i) => {
+    c.style.transform = `translateX(${(i - STATE.resultCard) * 100}%)`;
+    deck.appendChild(c);
+  });
+
+  // dots
+  const dots = el('div', 'result-dots');
+  for (let i = 0; i < 4; i++) {
+    const d = el('div', 'dot' + (i === STATE.resultCard ? ' active' : ''));
+    d.onclick = () => { STATE.resultCard = i; updateDeck(); };
+    dots.appendChild(d);
+  }
+
+  function updateDeck() {
+    deck.querySelectorAll('.result-card').forEach((c, i) => {
+      c.style.transform = `translateX(${(i - STATE.resultCard) * 100}%)`;
+    });
+    dots.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === STATE.resultCard));
+  }
+
+  // swipe
+  let startX = 0, dx = 0, swiping = false;
+  const onStart = (e) => {
+    swiping = true;
+    startX = (e.touches ? e.touches[0].clientX : e.clientX);
+    dx = 0;
+    deck.querySelectorAll('.result-card').forEach(c => c.style.transition = 'none');
+  };
+  const onMove = (e) => {
+    if (!swiping) return;
+    const x = (e.touches ? e.touches[0].clientX : e.clientX);
+    dx = x - startX;
+    deck.querySelectorAll('.result-card').forEach((c, i) => {
+      c.style.transform = `translateX(calc(${(i - STATE.resultCard) * 100}% + ${dx}px))`;
+    });
+  };
+  const onEnd = () => {
+    if (!swiping) return;
+    swiping = false;
+    deck.querySelectorAll('.result-card').forEach(c => c.style.transition = '');
+    if (Math.abs(dx) > 50) {
+      if (dx < 0 && STATE.resultCard < 3) STATE.resultCard++;
+      else if (dx > 0 && STATE.resultCard > 0) STATE.resultCard--;
+    }
+    updateDeck();
+    dx = 0;
+  };
+  deck.addEventListener('mousedown', onStart);
+  deck.addEventListener('touchstart', onStart, { passive: true });
+  onWindow('mousemove', onMove);
+  onWindow('touchmove', onMove, { passive: true });
+  onWindow('mouseup', onEnd);
+  onWindow('touchend', onEnd);
+
+  screen.appendChild(deck);
+  screen.appendChild(dots);
+  app.appendChild(screen);
+}
+
+function buildResultCard(r, i) {
+  const card = el('div', 'result-card');
+  const cat = CAT_MAP[r.cat] || 'home';
+  const brand = BRAND_BY_ID[r.brand];
+  const brandName = brand ? (brand.name || brand.name_zh) : '—';
+  const pos = i === 0 ? T.mainPick[STATE.lang] : T.alt[STATE.lang];
+  const positionLabel = `${pos} · ${String(i+1).padStart(2,'0')} / 03`;
+  const cardName = STATE.lang === 'zh' ? r.name_zh : (r.name_en || r.name_zh);
+  const cardNameAlt = STATE.lang === 'zh' ? (r.name_en || '') : r.name_zh;
+  const desc = DESC[cat] ? DESC[cat][STATE.lang] : '';
+  const reason = REASON_TAGS[cat] ? REASON_TAGS[cat][STATE.lang] : [];
+  const intentTagDisplay = (STATE.intent[0] && resolveIntentLabel(STATE.intent[0])) || (reason[0] || '');
+  const tagsHtml = [intentTagDisplay, ...reason.slice(0, 3)].filter(Boolean).map((tg, idx) =>
+    `<span class="tag${idx === 0 ? ' primary' : ''}">${tg}</span>`
+  ).join('');
+
+  card.innerHTML = `
+    <div class="result-meta">
+      <div class="result-pos">${positionLabel}</div>
+      <div class="result-score">${r.displayScore}%</div>
+    </div>
+    <div class="result-img">${CAT_SVG[cat] || CAT_SVG.home}</div>
+    <div class="result-cat">· ${CAT_LABEL[cat][STATE.lang]} ·</div>
+    <div class="result-brand">${brandName}</div>
+    <div class="result-name ${STATE.lang==='en'?'lang-en':''}">${cardName}</div>
+    ${cardNameAlt ? `<div class="result-name-alt ${STATE.lang==='en'?'lang-en':''}">${cardNameAlt}</div>` : ''}
+    <div class="result-price">${localizedPrice(r.price)}</div>
+    <div class="result-desc ${STATE.lang==='en'?'lang-en':''}">${desc}</div>
+    <div class="result-tags">${tagsHtml}</div>
+    <div class="result-cta">
+      <button>${t('goBuy')}<span class="platform">· ${PLATFORM[STATE.region]}</span></button>
+    </div>
+  `;
+  return card;
+}
+
+function resolveIntentLabel(intentId) {
+  for (const tags of Object.values(INTENTS)) {
+    const t = tags.find(t => t.id === intentId);
+    if (t) return t[STATE.lang];
+  }
+  return null;
+}
+
+function buildRefineCard() {
+  const card = el('div', 'result-card');
+  const inner = el('div', 'refine-card');
+  const tip = TIPS[STATE.tipIndex];
+  inner.innerHTML = `
+    <div class="refine-title ${STATE.lang==='en'?'lang-en':''}">
+      ${T.refineTitle[STATE.lang]}
+      <span class="alt">${STATE.lang==='zh'? T.refineTitle.en : T.refineTitle.zh}</span>
+    </div>
+    <div class="refine-list">
+      ${T.refineItems.map((it, i) => `
+        <div class="refine-item" data-i="${i}">
+          <span>${it[STATE.lang]}</span>
+          <span class="arrow">${i === T.refineItems.length - 1 ? '↺' : '→'}</span>
+        </div>
+      `).join('')}
+    </div>
+    <div class="refine-tip">
+      ${tip[STATE.lang]}
+      <span class="alt">${STATE.lang==='zh' ? tip.en : tip.zh}</span>
+    </div>
+  `;
+  inner.querySelectorAll('.refine-item').forEach(item => {
+    item.onclick = () => {
+      const i = parseInt(item.dataset.i, 10);
+      if (i === 0) { STATE.step = 1; render(); }
+      else if (i === 1) { STATE.step = 5; render(); }
+      else if (i === 2) { STATE.step = 6; render(); }
+      else if (i === 3) { STATE.step = 8; render(); }
+      else if (i === 4) { Object.assign(STATE, freshStateKeepLang()); render(); }
+    };
+  });
+  card.appendChild(inner);
+  return card;
+}
+
+// ============== BOOT ==============
+render();
+</script>
+</body>
+</html>
